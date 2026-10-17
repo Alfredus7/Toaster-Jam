@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
   m_Name: Intro
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
-  lines: []
+  lines:
+  - character: {fileID: 11400000, guid: b4cabe2f7fdc9374d884e16029dd51d7, type: 2}
+    text: holaaaaaaaaaa
+  - character: {fileID: 11400000, guid: b4cabe2f7fdc9374d884e16029dd51d7, type: 2}
+    text: soy aliza jaskdjad
+  - character: {fileID: 11400000, guid: b4cabe2f7fdc9374d884e16029dd51d7, type: 2}
+    text: jejejeejjje jola jola
