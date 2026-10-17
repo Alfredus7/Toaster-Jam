@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: Dialog Intro Level 1
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Ubicaci\xF3n: Base ECHO-NET.  \r\nEstado del entorno: sin signos vitales
+      detectados...\r\nPeligro niebla toxica acerc\xE1ndose\r\n"
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Me equivoqu\xE9...  \r\nAl parecer, aqu\xED tampoco hay nadie.\r\n"
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Se\xF1al residual detectada en la banda de comunicaciones locales."
+  - character: {fileID: 11400000, guid: 8aa2fa9052f375d4ca8a076ac9ce5ec3, type: 2}
+    text: "(Interferencia est\xE1tica)  \r\n\xBFHola?... \xBFHay alguien?... (la
+      se\xF1al se corta abruptamente)\r\n"
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xBFHola? rayos se perdi\xF3 la se\xF1al"
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Debe ser la red del \xE1rea... el ancho de banda est\xE1 degradado."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "A ver...  \r\nEl generador no arranca, el fusible principal est\xE1 fundido, 
+      \r\ny la antena direccional se vino abajo.  "
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Todo el sistema est\xE1 fuera de l\xEDnea.  \r\nSi logro restaurar la
+      red del \xE1rea,  \r\nConseguir\xE9 una comunicaci\xF3n limpia."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "(suspira)   El orden de reparaci\xF3n ser\xE1 Generador, fusible, antena.  
+      No es la primera vez que reanimo una red ca\xEDda. "

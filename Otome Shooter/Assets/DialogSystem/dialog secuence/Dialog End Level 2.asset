@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: Dialog End Level 2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Conexi\xF3n de \xE1rea restablecida.\r\nIniciando reproducci\xF3n de se\xF1al
+      recuperada\u2026"
+  - character: {fileID: 11400000, guid: 4eb03fd1200b1aa438bddb6e4762d039, type: 2}
+    text: "si est\xE1s escuchando esto no se acerquen Fuimos atacados\u2026 \r\nno
+      sabemos qui\xE9nes son, pero\u2026 llevan insignias militares del bando enemigo\u2026"
+  - character: {fileID: 11400000, guid: 4eb03fd1200b1aa438bddb6e4762d039, type: 2}
+    text: "Llegaron tras captar nuestra se\xF1al.\r\nSi est\xE1s escuchando esto\u2026
+      no vengas\u2026no es seguro"
+  - character: {fileID: 11400000, guid: 039f7ea10be1c034891c78d336b0051a, type: 2}
+    text: "Advertencia: nueva se\xF1al detectada en el per\xEDmetro.\r\nOrigen: Unidad
+      de Combate URQ-027."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xBFURQ-027?\r\nun modelo de combate militar.\r\nDebi\xF3 reactivarse
+      con la energ\xEDa."
+  - character: {fileID: 11400000, guid: 3e9cab8e244cb64418dba0a9badcab27, type: 2}
+    text: "Identif\xEDquense. Zona Restringida.\r\nIntrusos ser\xE1n eliminados."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Esc\xFAchame, chatarra.\r\nNo estoy aqu\xED para pelear. Solo quiero informaci\xF3n.\r\nDime
+      qu\xE9 pas\xF3 aqu\xED, o te desarmo"
+  - character: {fileID: 11400000, guid: 3e9cab8e244cb64418dba0a9badcab27, type: 2}
+    text: "Procesando\u2026\r\nEl asentamiento fue asediado por nuestras fuerzas
+      del Frente Epsilon."
+  - character: {fileID: 11400000, guid: 3e9cab8e244cb64418dba0a9badcab27, type: 2}
+    text: "Objetivo: extracci\xF3n de recursos. Resultado: fracaso. Retirada de nuestras
+      fuerzas tras agotamiento de suministros. "
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xBFY los sobrevivientes? sabes de una joven con rasgos similares al m\xEDo? "
+  - character: {fileID: 11400000, guid: 3e9cab8e244cb64418dba0a9badcab27, type: 2}
+    text: "Un Grupo de civiles fue detectado. Algunos prisioneros escaparon hacia
+      el norte\u2026 Destino posible: Refugio Nevado 73. "
+  - character: {fileID: 11400000, guid: 3e9cab8e244cb64418dba0a9badcab27, type: 2}
+    text: "Liderados por sujeto femenino coincidente con rasgos del solicitante Registrado
+      con el nombre de \u201CSofia\u201D  "
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xBFRefugio Nevado 73? (levanta la mirada) Entonces\u2026 eres t\xFA,
+      Sof\xEDa. "
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Est\xE1 viva\u2026 Y la Buscare, hasta el fin del mundo si es necesario. "
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Nueva ubicaci\xF3n registrada en el mapa: Refugio Nevado 73."

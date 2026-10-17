@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: Dialog Intro Level 2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Ubicaci\xF3n: Asentamiento \u201CVilla Marchita\u201D. Estado del entorno:
+      sin signos vitales detectados. Advertencia: radiaci\xF3n ambiental en el \xC1rea."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "(voz cansada) As\xED que\u2026 este era el asentamiento. Todo lo que queda
+      son m\xE1quinas oxidadas y un Sitio Vac\xEDo. Ni rastro de vida\u2026 solo
+      silencio."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Pareciese que aqu\xED hubo una pelea\u2026maquinas combate y escombros. "
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Se\xF1al residual detectada en la red del area"
+  - character: {fileID: 11400000, guid: 8aa2fa9052f375d4ca8a076ac9ce5ec3, type: 2}
+    text: "(entre est\xE1tica) si est\xE1s escu\u2026 no te acerq\u2026 (ruido fuerte)
+      \u2026ata \u2026  (la se\xF1al se corta abruptamente)."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xA1rayos! se perdi\xF3 la se\xF1al... Debo recuperar esa se\xF1al antes
+      de que la radiaci\xF3n aumente"
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "A ver\u2026 el Generador Compacto parece que se apag\xF3, pero\r\nUna
+      secci\xF3n esta bloqueada "
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "As\xED que tengo que restaurar energ\xEDa, hackear el terminal, arreglar
+      el fusible, activar la torre y la antena."

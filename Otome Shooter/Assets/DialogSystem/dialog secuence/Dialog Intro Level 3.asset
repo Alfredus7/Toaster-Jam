@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: Dialog Intro Level 3
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Ubicaci\xF3n: Refugio Nevado 73.\r\nEstado del entorno: sin signos vitales
+      detectados.\r\nAdvertencia: habr\xE1 bajada de temperatura bajo 0."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "As\xED que\u2026 este es el Refugio Nevado 73.\r\nLa \xFAltima Ubicaci\xF3n
+      de mi Hija\u2026."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Todo est\xE1 congelado\u2026 como si el tiempo se hubiera detenido aqu\xED.\r\nSolo
+      queda el viento golpeando los restos de lo que alguna vez fue un refugio."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Sof\xEDa\u2026 si realmente llegaste hasta aqu\xED\u2026\r\npor favor,
+      dame una se\xF1al."
+  - character: {fileID: 11400000, guid: 2df284e1ae2bb814d8029d1e7bd077e5, type: 2}
+    text: "(la radio emite un leve chasquido y ruido est\xE1tico)\r\n\u2014Pap\xE1\u2026
+      si escuchas esto\u2026 no te preocupes\u2026\r\nviv\xED bien\u2026 \u2014 (la
+      grabaci\xF3n se corta abruptamente)"
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "\xBFSof\xEDa?\r\nNo\u2026 no puede ser\u2026 estabas Aqu\xED."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "A ver...\nEl generador principal est\xE1 apagado,\nla terminal de control
+      no responde,\ny el reactor permanece en modo de seguridad."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "(suspira)\nSin energ\xEDa no podr\xE9 acceder al b\xFAnker ni a los registros."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Primero tendr\xE9 que reactivar el generador,\nluego hackear la terminal
+      del reactor\npara redirigir la energ\xEDa hacia el refugio."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Despu\xE9s, reemplazar el fusible principal del b\xFAnker,\nreiniciar
+      los servidores,\ny finalmente acceder a la computadora del administrador."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Tendr\xE9 que apresurarme antes que la temperatura siga bajando."

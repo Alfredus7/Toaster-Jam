@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: Dialog End Level 1
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Conexi\xF3n de \xE1rea restaurada.  \r\nSe estableci\xF3 comunicaci\xF3n
+      con una se\xF1al desconocida."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "(suspira y escucha atentamente)  \r\nVamos\u2026 dame algo, por favor\u2026"
+  - character: {fileID: 11400000, guid: 8aa2fa9052f375d4ca8a076ac9ce5ec3, type: 2}
+    text: "\xBFHola?... \xBFHay alguien? ah\xED \r\nsomos del \xFAltimo Asentamiento
+      supervivientes."
+  - character: {fileID: 11400000, guid: 8aa2fa9052f375d4ca8a076ac9ce5ec3, type: 2}
+    text: "Todos que busque refugio venga a nosotros \r\nEstamos Ubicados en\u2026
+      La Gran Zona Des\xE9rtica"
+  - character: {fileID: 11400000, guid: 039f7ea10be1c034891c78d336b0051a, type: 2}
+    text: "Se perdi\xF3 la conexi\xF3n.  \r\nEl canal no es estable; la se\xF1al
+      es d\xE9bil."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "Zona Des\xE9rtica\u2026  \r\n(abre su mapa y enfoca la ubicaci\xF3n) 
+      \r\nVilla Marchita\u2026Es el \xFAnico punto registrado."
+  - character: {fileID: 11400000, guid: 9f1001abb7e4a5a489b0b32a62dbf20b, type: 2}
+    text: "(respira hondo, concentrado)  \r\nSi hay supervivientes, es probable que
+      \r\nmi hija Sof\xEDa\u2026 podr\xEDa estar en ese lugar."
+  - character: {fileID: 11400000, guid: 0a183ea4b7fb77a46b51313d875b10cb, type: 2}
+    text: "Ubicaci\xF3n de destino marcada en el mapa: Asentamiento supervivientes
+      Villa Marchita."
