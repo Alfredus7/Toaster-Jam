@@ -369,28 +369,60 @@ MonoBehaviour:
   nameText: {fileID: 849193505}
   dialogueText: {fileID: 1598024936}
   leftCharacterName: Aliza
+  leftAliases:
+  - Mente
   rightCharacterName: Chico
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  rightAppearsAtLine: 8
+  fadeDuration: 0.5
   choicesPanel: {fileID: 804948149}
   buttonA: {fileID: 858077559}
   buttonB: {fileID: 1796429196}
   labelA: {fileID: 608738911}
   labelB: {fileID: 1114344851}
   choicePoints:
-  - afterLine: 2
+  - afterLine: 8
     optionA:
-      label: 
-      response: 
-      responseSide: 0
+      label: "\xA1Muere, robot!"
+      response: ...
+      responseSide: 1
+      responsePortrait: {fileID: 0}
       points: 0
     optionB:
-      label: 
-      response: 
-      responseSide: 0
+      label: "Oh... hola\u2026 Buenos d\xEDas."
+      response: Buenas, Aliza.
+      responseSide: 1
+      responsePortrait: {fileID: 0}
+      points: 1
+  - afterLine: 22
+    optionA:
+      label: Mi arma de plasma puede con lo que sea.
+      response: "Supondr\xE9 que es un s\xED\u2026"
+      responseSide: 1
+      responsePortrait: {fileID: 0}
       points: 0
-  currentDialogue: {fileID: 11400000, guid: 103608b9e3de56a49a162504870894c1, type: 2}
-  typingSpeed: 0.03
+    optionB:
+      label: "Oh... hola\u2026 Buenos d\xEDas."
+      response: "As\xED se habla."
+      responseSide: 1
+      responsePortrait: {fileID: 0}
+      points: 1
+  - afterLine: 39
+    optionA:
+      label: "\xA1\xA1\xA1Por el neomundo!!! \xA1\xA1\xA1All\xE1 voy!!!"
+      response: 
+      responseSide: 1
+      responsePortrait: {fileID: 0}
+      points: 0
+    optionB:
+      label: "Claro\u2026 Vamos\u2026"
+      response: 
+      responseSide: 1
+      responsePortrait: {fileID: 0}
+      points: 1
+  currentDialogue: {fileID: 11400000, guid: 5fbee57278c8f1049bc1b5647d813179, type: 2}
+  typingSpeed: 0.05
   autoDelay: 1
   OnDialogueEnd:
     m_PersistentCalls:

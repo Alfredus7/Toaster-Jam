@@ -31,11 +31,67 @@ MonoBehaviour:
     text: "\xA1pium! \xA1pium! \xA1pium!"
   - character: {fileID: 0}
     text: Alguien se acerca.
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Quer\xEDa hablar contigo"
+  - character: {fileID: 11400000, guid: ec667949457dc204b97501d4899e2e64, type: 2}
+    text: "\xBFConmigo\u2026? \xBFPara que quiere hablar conmigo?"
+  - character: {fileID: 11400000, guid: ec667949457dc204b97501d4899e2e64, type: 2}
+    text: "\xBFEs una confesi\xF3n\u2026? Debe ser eso \xBFno?"
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "\xBFQuer\xEDa saber si hiciste la tarea para ma\xF1ana?"
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "\xBFQu\xE9 si hice la tarea?"
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: Debe ser una prueba para saber si soy responsable y apta para el matrimonio.
+  - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
+    text: Claro que lo hice. Siempre pienso en mi futuro.
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: El futuro es importante, hoy solo soy una chica normal.
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Pero en el futuro ser\xE9 alguien\u2026 m\xE1s alta y con dinero."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Ser\xE9 poderosa, nadie podr\xEDa vencerme. Ni siquiera un robot gigante."
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Podr\xEDamos reunirnos para hacer la tarea junto."
   - character: {fileID: 0}
     text: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
-    text: "Quer\xEDa hablar contigo"
+    text: "\xBFEn donde podr\xEDamos reunirnos?"
+  - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
+    text: "Por m\xED me parece bien donde sea."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: Bien, he respondido.
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: "Sigue as\xED."
+  - character: {fileID: 11400000, guid: 10498a8be2353d742888e9197821ed23, type: 2}
+    text: "Creo que hay un lugar cerca de aqu\xED."
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: "\xA1Se puede! \xA1Se puede!"
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
-    text: "Quer\xEDa hablar contigo"
+    text: "Creo que s\xE9 de donde hablas."
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
-    text: "Quer\xEDa hablar contigo"
+    text: Me gusta ese lugar.
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: Lo hice!. Fue una respuesta espectacular.
+  - character: {fileID: 11400000, guid: 10498a8be2353d742888e9197821ed23, type: 2}
+    text: Creo que va a abrir dentro de poco.
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Increible, deberiamos ir ah\xED."
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: 'La estoy rompiendo. '
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Mis respuestas est\xE1n a\xF1os de diferencia del resto."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "A\xF1os en el futuro."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Con robots, armas con luces y caos\u2026"
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "\xBFQu\xE9 opinas? \xBFVamos luego?"
+  - character: {fileID: 0}
+    text: 
+  - character: {fileID: 0}
+    text: "Luces de ne\xF3n, robots."
+  - character: {fileID: 0}
+    text: Las luces fuera de la naturaleza invaden tu vista.
+  - character: {fileID: 0}
+    text: "Portando un arma en tu mano siente presencia con m\xE1s metal que alma en ellos."
