@@ -100,10 +100,23 @@ public class DialogueManager : MonoBehaviour
         NextLine();
     }
 
-    public void OnJump(InputValue value)
+    //public void OnJump(InputValue value)
+    //{
+    //    if (!isActive) return;
+    //    AdvanceLine();
+    //}
+
+    void Update()
     {
         if (!isActive) return;
-        AdvanceLine();
+
+        if ((Keyboard.current != null &&
+             Keyboard.current.spaceKey.wasPressedThisFrame) ||
+            (Mouse.current != null &&
+             Mouse.current.leftButton.wasPressedThisFrame))
+        {
+            AdvanceLine();
+        }
     }
 
     public void AdvanceLine()

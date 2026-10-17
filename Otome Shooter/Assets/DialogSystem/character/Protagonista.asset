@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5410075432e738048b1145248d7b87fe, type: 3}
-  m_Name: sofia level2
+  m_Name: Protagonista
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacter
-  characterName: s0fi@
-  portrait: {fileID: 21300000, guid: c8184f3e0b0d65f4b9b2176f7ba6b4ea, type: 3}
-  Material: {fileID: 2100000, guid: 9a3bd82563d9e0740af7286c6be2209d, type: 2}
+  characterName: 
+  portrait: {fileID: 0}
+  Material: {fileID: 0}
