@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5410075432e738048b1145248d7b87fe, type: 3}
   m_Name: Mente
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacter
-  characterName: 
-  portrait: {fileID: 0}
+  characterName: mente
+  portrait: {fileID: 21300000, guid: bbc7a93949c56ec42bc43bf956926fce, type: 3}
   Material: {fileID: 0}

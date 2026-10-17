@@ -12,4 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
   m_Name: DialogueSequence
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
-  lines: []
+  lines:
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: Mi nombre es Aliza
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: Soy una chica normal en una escuela normal.
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Al igual que el resto me coloco el pantal\xF3n una pierna a la vez."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Ser\xEDa genial colocarse el pantal\xF3n de una."
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Talvez en el futuro hayan pantalones as\xED de avanzados.\t"
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "\xBFQu\xE9 m\xE1s deparar\xEDa el futuro? \xBFRobots?"
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "\t\xBFCu\xE1ntos disparos me aguantar\xEDan un robot?"
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "\xA1pium! \xA1pium! \xA1pium!"
+  - character: {fileID: 0}
+    text: Alguien se acerca.
+  - character: {fileID: 0}
+    text: 
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Quer\xEDa hablar contigo"
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Quer\xEDa hablar contigo"
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Quer\xEDa hablar contigo"
