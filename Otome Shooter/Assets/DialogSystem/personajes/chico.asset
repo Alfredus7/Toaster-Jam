@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5410075432e738048b1145248d7b87fe, type: 3}
   m_Name: chico
   m_EditorClassIdentifier: Assembly-CSharp::DialogueCharacter
-  characterName: 
-  portrait: {fileID: 0}
+  characterName: Chico
+  portrait: {fileID: 21300000, guid: 3bdc1aafd3eb91248b7a84ff5cc98728, type: 3}
   Material: {fileID: 0}
