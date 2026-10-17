@@ -95,3 +95,5 @@ MonoBehaviour:
     text: Las luces fuera de la naturaleza invaden tu vista.
   - character: {fileID: 0}
     text: "Portando un arma en tu mano siente presencia con m\xE1s metal que alma en ellos."
+  - character: {fileID: 0}
+    text: "Portando un arma en tu mano siente presencia con m\xE1s metal que alma en ellos."
