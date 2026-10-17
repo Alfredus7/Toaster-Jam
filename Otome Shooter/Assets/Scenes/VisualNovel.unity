@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 1598024937}
   - component: {fileID: 1598024936}
   m_Layer: 5
-  m_Name: TextoDialogo
+  m_Name: DialogueLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
