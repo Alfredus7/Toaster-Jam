@@ -464,7 +464,7 @@ MonoBehaviour:
   rightCharacterName: Arthur
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  rightAppearsAtLine: 8
+  rightAppearsAtLine: 1
   fadeDuration: 0.5
   choicesPanel: {fileID: 804948149}
   buttonA: {fileID: 858077559}
