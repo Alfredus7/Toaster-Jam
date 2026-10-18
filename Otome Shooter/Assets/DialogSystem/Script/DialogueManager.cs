@@ -26,6 +26,27 @@ public enum CharacterVisibility
     OnlyRight
 }
 
+
+public enum DialogueMusicAction
+{
+    Change,
+    Stop,
+    RestoreOriginal
+}
+
+[System.Serializable]
+public class DialogueMusicEvent
+{
+    [Tooltip("Línea en la que se ejecuta. 0 = primera línea.")]
+    public int atLine;
+
+    public DialogueMusicAction action =
+        DialogueMusicAction.Change;
+
+    public AudioClip newMusic;
+}
+
+
 // Una opción (A o B) que el jugador puede elegir.
 [System.Serializable]
 public class ChoiceOption
@@ -85,6 +106,15 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI labelB;
     public ChoicePoint[] choicePoints;
 
+
+    [Header("Eventos de música")]
+    public AudioSource musicSource;
+    public DialogueMusicEvent[] musicEvents;
+
+    private AudioClip originalMusic;
+    private bool originalMusicLoop;
+
+
     [Header("Configuración")]
     public DialogueSequence currentDialogue;
     public float typingSpeed = 0.03f;
@@ -140,6 +170,12 @@ public class DialogueManager : MonoBehaviour
 
         if (currentDialogue != null)
         {
+            // Guardar la música que tenía originalmente la escena.
+            if (musicSource != null)
+            {
+                originalMusic = musicSource.clip;
+                originalMusicLoop = musicSource.loop;
+            }
             StartDialogue(currentDialogue);
         }
         else
@@ -147,6 +183,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("No hay diálogo asignado al iniciar.");
         }
     }
+
+
 
     public void StartDialogue(DialogueSequence dialogue)
     {
@@ -270,6 +308,52 @@ public class DialogueManager : MonoBehaviour
     }
 
 
+    // Ejecuta los eventos musicales al comenzar una línea del diálogo.
+    void CheckMusicEvents()
+    {
+        if (musicSource == null || musicEvents == null)
+            return;
+
+        foreach (DialogueMusicEvent evento in musicEvents)
+        {
+            if (evento == null || evento.atLine != currentIndex)
+                continue;
+
+            switch (evento.action)
+            {
+                case DialogueMusicAction.Change:
+                    if (evento.newMusic == null)
+                    {
+                        Debug.LogWarning(
+                            "No hay canción asignada en la línea " + currentIndex
+                        );
+                        break;
+                    }
+
+                    musicSource.Stop();
+                    musicSource.clip = evento.newMusic;
+                    musicSource.loop = true;
+                    musicSource.Play();
+                    Debug.Log("Nueva canción en línea " + currentIndex);
+                    break;
+
+                case DialogueMusicAction.Stop:
+                    musicSource.Stop();
+                    Debug.Log("Música detenida en línea " + currentIndex);
+                    break;
+
+                case DialogueMusicAction.RestoreOriginal:
+                    musicSource.Stop();
+                    musicSource.clip = originalMusic;
+                    musicSource.loop = originalMusicLoop;
+                    if (originalMusic != null)
+                        musicSource.Play();
+                    Debug.Log("Música original restaurada en línea " + currentIndex);
+                    break;
+            }
+        }
+    }
+
     void ShowCurrentLine()
     {
         if (currentDialogue == null || currentDialogue.lines.Length == 0)
@@ -280,6 +364,9 @@ public class DialogueManager : MonoBehaviour
 
         showingResponse = false;
         var line = currentDialogue.lines[currentIndex];
+
+        // Ejecuta eventos musicales asociados a esta línea, si los hay.
+        CheckMusicEvents();
 
         // El personaje derecho entra en la línea indicada
         if (currentIndex == rightAppearsAtLine)

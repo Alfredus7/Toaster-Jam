@@ -472,6 +472,8 @@ MonoBehaviour:
   labelA: {fileID: 608738911}
   labelB: {fileID: 1114344851}
   choicePoints: []
+  musicSource: {fileID: 1059611604}
+  musicEvents: []
   currentDialogue: {fileID: 11400000, guid: 4e2912dce77594a4393dc7ebb4f43d4f, type: 2}
   typingSpeed: 0.03
   autoDelay: 1
