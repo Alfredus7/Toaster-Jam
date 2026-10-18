@@ -480,7 +480,7 @@ MonoBehaviour:
       responsePortrait: {fileID: 21300000, guid: 66c3aa6a6052f78419dbd8af5906d591, type: 3}
       points: 0
     optionB:
-      label: "Oh... hola\u2026 Buenos d\xEDas."
+      label: "Oh... hola\u2026 Buenos d\xEDas, Arthur."
       response: Buenas, Aliza.
       responseSide: 1
       responsePortrait: {fileID: 0}
@@ -493,7 +493,7 @@ MonoBehaviour:
       responsePortrait: {fileID: 21300000, guid: 66c3aa6a6052f78419dbd8af5906d591, type: 3}
       points: 0
     optionB:
-      label: Por supuesto.
+      label: Por supuesto, Arthur.
       response: "As\xED se habla."
       responseSide: 1
       responsePortrait: {fileID: 0}
@@ -506,7 +506,7 @@ MonoBehaviour:
       responsePortrait: {fileID: 0}
       points: 0
     optionB:
-      label: "Claro\u2026 Vamos\u2026"
+      label: "Claro\u2026 Vamos, Arthur."
       response: 
       responseSide: 1
       responsePortrait: {fileID: 0}
@@ -1656,6 +1656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b051aee29cab140b9cb14694981e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hiddenScore: 0
 --- !u!4 &1388763651
 Transform:
   m_ObjectHideFlags: 0
