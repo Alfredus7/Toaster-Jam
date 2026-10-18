@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    // Enum para elegir el modo del timer en el inspector
     public enum TimerMode { CountUp, CountDown }
 
     [Header("Referencias (auto-detectadas si las dejás vacías)")]
@@ -19,12 +18,10 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] Color emptyColor = new Color(0.25f, 0.25f, 0.25f, 1f);
 
     [Header("Temporizador")]
-    [Tooltip("Text con el tiempo en formato MM:SS.")]
     [SerializeField] Text timerText;
     [SerializeField] TimerMode timerMode = TimerMode.CountUp;
     [Tooltip("Duración en SEGUNDOS. Solo se usa en CountDown. 120 = 02:00.")]
     [SerializeField] float countdownSeconds = 120f;
-    [Tooltip("Si está en CountDown y llega a 0, dispara derrota.")]
     [SerializeField] bool defeatOnTimeout = true;
 
     [Header("Paneles de Fin de Juego")]
@@ -33,11 +30,13 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] bool pauseOnGameOver = true;
     [SerializeField] bool showCursorOnGameOver = true;
 
+    [Header("Derribo (feedback opcional)")]
+    [SerializeField] GameObject downedPanel; // opcional: "Te están ayudando..."
+
     int remainingEnemies;
     bool gameEnded;
 
-    // --- Estado interno del timer ---
-    float timerAccumulated;   // segundos transcurridos desde el inicio
+    float timerAccumulated;
     bool timerRunning;
 
     void Awake()
@@ -45,12 +44,9 @@ public class PlayerUIManager : MonoBehaviour
         if (playerController == null) playerController = FindObjectOfType<FirstPersonController>();
         if (playerHealth == null) playerHealth = FindObjectOfType<PlayerHealth>();
 
-        if (playerController == null)
-            Debug.LogError("[PlayerUIManager] No encontró FirstPersonController en la escena.");
-        if (playerHealth == null)
-            Debug.LogError("[PlayerUIManager] No encontró PlayerHealth en la escena.");
-        if (healthSlider == null)
-            Debug.LogError("[PlayerUIManager] healthSlider sin asignar.");
+        if (playerController == null) Debug.LogError("[PlayerUIManager] No encontró FirstPersonController.");
+        if (playerHealth == null) Debug.LogError("[PlayerUIManager] No encontró PlayerHealth.");
+        if (healthSlider == null) Debug.LogError("[PlayerUIManager] healthSlider sin asignar.");
 
         if (healthSlider != null)
         {
@@ -61,35 +57,37 @@ public class PlayerUIManager : MonoBehaviour
 
         if (victoryPanel != null) victoryPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(false);
+        if (downedPanel != null) downedPanel.SetActive(false);
     }
 
     void OnEnable()
     {
-        if (playerHealth != null) playerHealth.HealthChanged += OnHealthChanged;
+        if (playerHealth != null)
+        {
+            playerHealth.HealthChanged += OnHealthChanged;
+            playerHealth.Downed += OnPlayerDowned;      // nuevo
+            playerHealth.Recovered += OnPlayerRecovered; // nuevo
+        }
         if (playerController != null) playerController.DashChargesChanged += OnDashChargesChanged;
     }
 
     void Start()
     {
-        // Sincronización inicial de UI
         if (playerHealth != null)
             OnHealthChanged(playerHealth.CurrentHealth, playerHealth.MaxHealth);
 
         if (playerController != null)
             OnDashChargesChanged(playerController.CurrentDashCharges, playerController.MaxDashCharges);
 
-        // Suscribirse a muerte del jugador
-        if (playerHealth != null)
-            playerHealth.Died += OnPlayerDied;
+        // --- OJO: ya NO nos suscribimos a playerHealth.Died ---
+        // (si querés, podés eliminar la línea antigua `playerHealth.Died += OnPlayerDied;`)
 
-        // Contar enemigos vivos
         var enemies = FindObjectsOfType<EnemyHealth>();
         remainingEnemies = enemies.Length;
         foreach (var e in enemies) e.Died += OnEnemyDied;
 
         Debug.Log($"[PlayerUIManager] Enemigos iniciales: {remainingEnemies}");
 
-        // --- Arrancar temporizador ---
         timerAccumulated = 0f;
         timerRunning = true;
         UpdateTimerText(GetDisplaySeconds());
@@ -99,54 +97,49 @@ public class PlayerUIManager : MonoBehaviour
     {
         if (!timerRunning || gameEnded) return;
 
-        timerAccumulated += Time.deltaTime;
+        // *** CAMBIO CLAVE: unscaledDeltaTime para que el timer siga
+        //     avanzando aunque Time.timeScale = 0 durante el derribo ***
+        timerAccumulated += Time.unscaledDeltaTime;
 
         float display = GetDisplaySeconds();
         UpdateTimerText(display);
 
-        // CountDown agotado → derrota (opcional)
         if (timerMode == TimerMode.CountDown && display <= 0f && defeatOnTimeout)
         {
-            ShowDefeat();
+            ShowDefeat(); // única forma de perder
         }
     }
 
     void OnDisable()
     {
-        if (playerHealth != null) playerHealth.HealthChanged -= OnHealthChanged;
+        if (playerHealth != null)
+        {
+            playerHealth.HealthChanged -= OnHealthChanged;
+            playerHealth.Downed -= OnPlayerDowned;
+            playerHealth.Recovered -= OnPlayerRecovered;
+            // playerHealth.Died -= OnPlayerDied;  // quitado
+        }
         if (playerController != null) playerController.DashChargesChanged -= OnDashChargesChanged;
-        if (playerHealth != null) playerHealth.Died -= OnPlayerDied;
     }
 
-    // ---------------------------------------------
-    // VIDA
-    // ---------------------------------------------
     void OnHealthChanged(float current, float max)
     {
         if (healthSlider != null)
             healthSlider.value = max > 0f ? current / max : 0f;
     }
 
-    // ---------------------------------------------
-    // DASH
-    // ---------------------------------------------
     void OnDashChargesChanged(int current, int max)
     {
         for (int i = 0; i < dashChargeImages.Length; i++)
         {
             if (dashChargeImages[i] == null) continue;
-
             bool shouldShow = i < max;
             dashChargeImages[i].gameObject.SetActive(shouldShow);
             if (!shouldShow) continue;
-
             dashChargeImages[i].color = i < current ? chargedColor : emptyColor;
         }
     }
 
-    // ---------------------------------------------
-    // TIMER
-    // ---------------------------------------------
     float GetDisplaySeconds()
     {
         return timerMode == TimerMode.CountUp
@@ -157,13 +150,35 @@ public class PlayerUIManager : MonoBehaviour
     void UpdateTimerText(float seconds)
     {
         if (timerText == null) return;
-
-        int totalSecs = Mathf.CeilToInt(seconds);      // redondeo hacia arriba
+        int totalSecs = Mathf.CeilToInt(seconds);
         int mins = totalSecs / 60;
         int secs = totalSecs % 60;
-
-        // Formato MM:SS (con ceros a la izquierda)
         timerText.text = $"{mins:00}:{secs:00}";
+    }
+
+    // ---------------------------------------------
+    // DERRIBO / RECUPERACIÓN
+    // ---------------------------------------------
+    void OnPlayerDowned()
+    {
+        if (gameEnded) return;
+
+        // Congela el mundo (jugador + enemigos + físicas),
+        // pero el timer sigue porque usa unscaledDeltaTime.
+        Time.timeScale = 0f;
+
+        if (downedPanel != null) downedPanel.SetActive(true);
+        Debug.Log("[PlayerUIManager] Jugador derribado. Esperando recuperación...");
+    }
+
+    void OnPlayerRecovered()
+    {
+        if (downedPanel != null) downedPanel.SetActive(false);
+
+        // Solo restauramos el tiempo si el juego no terminó.
+        if (!gameEnded) Time.timeScale = 1f;
+
+        Debug.Log("[PlayerUIManager] Jugador recuperado.");
     }
 
     // ---------------------------------------------
@@ -172,19 +187,10 @@ public class PlayerUIManager : MonoBehaviour
     void OnEnemyDied(EnemyHealth enemy)
     {
         if (gameEnded) return;
-
         if (enemy != null) enemy.Died -= OnEnemyDied;
         remainingEnemies--;
         Debug.Log($"[PlayerUIManager] Enemigos restantes: {remainingEnemies}");
-
-        if (remainingEnemies <= 0)
-            ShowVictory();
-    }
-
-    void OnPlayerDied()
-    {
-        if (gameEnded) return;
-        ShowDefeat();
+        if (remainingEnemies <= 0) ShowVictory();
     }
 
     void ShowVictory()
@@ -192,7 +198,6 @@ public class PlayerUIManager : MonoBehaviour
         if (gameEnded) return;
         gameEnded = true;
         timerRunning = false;
-
         if (victoryPanel != null) victoryPanel.SetActive(true);
         ApplyGameOverState();
         Debug.Log("[PlayerUIManager] VICTORIA");
@@ -203,10 +208,9 @@ public class PlayerUIManager : MonoBehaviour
         if (gameEnded) return;
         gameEnded = true;
         timerRunning = false;
-
         if (defeatPanel != null) defeatPanel.SetActive(true);
         ApplyGameOverState();
-        Debug.Log("[PlayerUIManager] DERROTA");
+        Debug.Log("[PlayerUIManager] DERROTA (tiempo agotado)");
     }
 
     void ApplyGameOverState()
