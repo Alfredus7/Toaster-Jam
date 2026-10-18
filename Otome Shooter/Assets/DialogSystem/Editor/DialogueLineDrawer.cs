@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEditor;
 
@@ -8,88 +9,230 @@ public class DialogueLineDrawer : PropertyDrawer
     private const float Padding = 6f;
     private const float MinTextHeight = 48f;
 
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+
+
+    public override float GetPropertyHeight(
+        SerializedProperty property,
+        GUIContent label)
     {
-        SerializedProperty textProp = property.FindPropertyRelative("text");
-        int lineCount = Mathf.Max(1, textProp.stringValue.Split('\n').Length);
+        SerializedProperty textProp =
+            property.FindPropertyRelative("text");
 
-        float textHeight = EditorGUIUtility.singleLineHeight * lineCount + Padding * 2;
-        textHeight = Mathf.Max(textHeight, MinTextHeight);
+        float h = EditorGUIUtility.singleLineHeight;
+        float textHeight = GetTextHeight(textProp);
 
-        return PortraitSize + textHeight + Padding * 4 + EditorGUIUtility.singleLineHeight * 2;
+        // Retrato + texto + dos títulos + dos desplegables
+        return Padding
+            + PortraitSize
+            + Padding * 2
+            + textHeight
+            + Padding * 2
+            + (h + Padding) * 4
+            + Padding * 2;
     }
 
-    public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label)
+
+
+
+    public override void OnGUI(
+        Rect pos,
+        SerializedProperty property,
+        GUIContent label)
     {
-        SerializedProperty characterProp = property.FindPropertyRelative("character");
-        SerializedProperty textProp = property.FindPropertyRelative("text");
+        SerializedProperty characterProp =
+            property.FindPropertyRelative("character");
+
+        SerializedProperty textProp =
+            property.FindPropertyRelative("text");
+
+        SerializedProperty backgroundProp =
+            property.FindPropertyRelative("backgroundAction");
+
+        SerializedProperty visibilityProp =
+            property.FindPropertyRelative("characterVisibility");
 
         EditorGUI.BeginProperty(pos, label, property);
 
-        // ----- Fondo general -----
-        Color bg = new Color(0.13f, 0.13f, 0.13f, 1f);
-        EditorGUI.DrawRect(pos, bg);
+        // Fondo general
+        EditorGUI.DrawRect(
+            pos,
+            new Color(0.13f, 0.13f, 0.13f, 1f)
+        );
 
-        pos.x += Padding;
-        pos.y += Padding;
-        pos.width -= Padding * 2;
+        Rect content = new Rect(
+            pos.x + Padding,
+            pos.y + Padding,
+            pos.width - Padding * 2,
+            pos.height - Padding * 2
+        );
 
-        // ----- Zona retrato + nombre -----
-        Rect portraitRect = new Rect(pos.x, pos.y, PortraitSize, PortraitSize);
-        Rect nameRect = new Rect(
-            pos.x + PortraitSize + Padding,
-            pos.y + 4,
-            pos.width - PortraitSize - Padding,
-            EditorGUIUtility.singleLineHeight
+        // Retrato
+        Rect portraitRect = new Rect(
+            content.x,
+            content.y,
+            PortraitSize,
+            PortraitSize
         );
 
         DrawCharacterPortrait(characterProp, portraitRect);
 
-        DialogueCharacter ch = characterProp.objectReferenceValue as DialogueCharacter;
-        string displayName = ch != null ? ch.characterName : "Sin personaje";
-        EditorGUI.LabelField(nameRect, displayName, EditorStyles.boldLabel);
+        DialogueCharacter ch =
+            characterProp.objectReferenceValue as DialogueCharacter;
 
-        // Selector del personaje
-        Rect charFieldRect = new Rect(
-            nameRect.x,
-            nameRect.y + EditorGUIUtility.singleLineHeight + Padding,
-            nameRect.width,
-            EditorGUIUtility.singleLineHeight
+        string displayName =
+            ch != null ? ch.characterName : "Sin personaje";
+
+        float lineHeight = EditorGUIUtility.singleLineHeight;
+
+        Rect nameRect = new Rect(
+            portraitRect.xMax + Padding,
+            content.y + 4,
+            content.width - PortraitSize - Padding,
+            lineHeight
         );
-        EditorGUI.PropertyField(charFieldRect, characterProp, GUIContent.none);
 
-        // ----- Texto del diálogo -----
-        float textStartY = pos.y + PortraitSize + Padding * 2;
-        float textHeight = GetTextHeight(textProp);
+        EditorGUI.LabelField(
+            nameRect,
+            displayName,
+            EditorStyles.boldLabel
+        );
 
-        Rect textRect = new Rect(pos.x, textStartY, pos.width, textHeight);
-        EditorGUI.PropertyField(textRect, textProp, new GUIContent(" ")); // sin label
+        // Selector de personaje
+        Rect charRect = new Rect(
+            nameRect.x,
+            nameRect.yMax + Padding,
+            nameRect.width,
+            lineHeight
+        );
+
+        EditorGUI.PropertyField(
+            charRect,
+            characterProp,
+            GUIContent.none
+        );
+
+        // Texto
+        float textY =
+            content.y + PortraitSize + Padding * 2;
+
+        Rect textRect = new Rect(
+            content.x,
+            textY,
+            content.width,
+            GetTextHeight(textProp)
+        );
+
+        EditorGUI.PropertyField(
+            textRect,
+            textProp,
+            GUIContent.none
+        );
+
+        // Configuración de fondo
+
+        // ----- Opciones de fondo y personajes -----
+
+        float y = textRect.yMax + Padding * 2;
+        float optionHeight = EditorGUIUtility.singleLineHeight;
+
+        // Título Fondo
+        EditorGUI.LabelField(
+            new Rect(content.x, y, content.width, optionHeight),
+            "FONDO",
+            EditorStyles.boldLabel
+        );
+
+        y += optionHeight + Padding;
+
+        // Desplegable de fondo
+        if (backgroundProp != null)
+        {
+            Rect fondoRect = new Rect(
+                content.x,
+                y,
+                content.width,
+                optionHeight
+            );
+
+            backgroundProp.enumValueIndex = EditorGUI.Popup(
+                fondoRect,
+                backgroundProp.enumValueIndex,
+                backgroundProp.enumDisplayNames
+            );
+        }
+
+        y += optionHeight + Padding * 2;
+
+        // Título Personajes
+        EditorGUI.LabelField(
+            new Rect(content.x, y, content.width, optionHeight),
+            "PERSONAJES",
+            EditorStyles.boldLabel
+        );
+
+        y += optionHeight + Padding;
+
+        // Desplegable de visibilidad
+        if (visibilityProp != null)
+        {
+            Rect visibilityRect = new Rect(
+                content.x,
+                y,
+                content.width,
+                optionHeight
+            );
+
+            visibilityProp.enumValueIndex = EditorGUI.Popup(
+                visibilityRect,
+                visibilityProp.enumValueIndex,
+                visibilityProp.enumDisplayNames
+            );
+        }
 
         EditorGUI.EndProperty();
     }
 
+
     private float GetTextHeight(SerializedProperty textProp)
     {
-        int lineCount = Mathf.Max(1, textProp.stringValue.Split('\n').Length);
-        float height = EditorGUIUtility.singleLineHeight * lineCount + Padding * 2;
+        int lineCount = Mathf.Max(
+            1,
+            textProp.stringValue.Split('\n').Length
+        );
+
+        float height =
+            EditorGUIUtility.singleLineHeight * lineCount
+            + Padding * 2;
+
         return Mathf.Max(height, MinTextHeight);
     }
 
-    private void DrawCharacterPortrait(SerializedProperty characterProp, Rect portraitRect)
+    private void DrawCharacterPortrait(
+        SerializedProperty characterProp,
+        Rect portraitRect)
     {
         Sprite sprite = null;
+
         if (characterProp.objectReferenceValue != null)
         {
-            DialogueCharacter dc = characterProp.objectReferenceValue as DialogueCharacter;
+            DialogueCharacter dc =
+                characterProp.objectReferenceValue as DialogueCharacter;
+
             sprite = dc != null ? dc.portrait : null;
         }
 
-        Color frameColor = new Color(0.25f, 0.25f, 0.25f);
+        Color frameColor =
+            new Color(0.25f, 0.25f, 0.25f);
+
         EditorGUI.DrawRect(portraitRect, frameColor);
 
         if (sprite == null)
         {
-            EditorGUI.HelpBox(portraitRect, "No\nPortrait", MessageType.None);
+            EditorGUI.HelpBox(
+                portraitRect,
+                "No\nPortrait",
+                MessageType.None
+            );
             return;
         }
 
@@ -103,6 +246,10 @@ public class DialogueLineDrawer : PropertyDrawer
             texRect.height / tex.height
         );
 
-        GUI.DrawTextureWithTexCoords(portraitRect, tex, uv);
+        GUI.DrawTextureWithTexCoords(
+            portraitRect,
+            tex,
+            uv
+        );
     }
 }
