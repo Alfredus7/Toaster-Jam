@@ -117,3 +117,19 @@ MonoBehaviour:
     minimumScore: 0
     lowScoreText: 
     highScoreText: 
+  - character: {fileID: 0}
+    text: "\xBFEst\xE1s ah\xED? Si no entendiste, ella te da las gracias."
+    backgroundAction: 0
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: "Hablando de gracias, deber\xEDas agradecerles a ellos."
+    backgroundAction: 0
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
