@@ -24,13 +24,16 @@ public class Enemy : MonoBehaviour, IDamageable
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
 
+    // --- IDamageable ---
+    public bool IsAlive => currentHealth > 0f;
+
     float currentHealth;
 
     void Awake() => currentHealth = maxHealth;
 
     public void TakeDamage(float amount, Vector3 point, Vector3 normal)
     {
-        if (currentHealth <= 0f) return;
+        if (!IsAlive) return;
 
         bool isCrit = Random.value < critChance;
         float finalDamage = isCrit ? amount * critMultiplier : amount;
@@ -38,10 +41,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
         SpawnPopup(finalDamage, isCrit, point);
 
-        // Hook para flash de material, sonido, knockback, IA, etc.
-        // Ejemplo: GetComponent<HitFlash>()?.Flash();
-
-        if (currentHealth <= 0f) Die();
+        if (!IsAlive) Die();
     }
 
     void SpawnPopup(float dmg, bool isCrit, Vector3 hitPoint)
@@ -71,7 +71,6 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         else
         {
-            // Desactivar sin destruir (útil si usas pooling)
             foreach (var c in GetComponentsInChildren<Collider>()) c.enabled = false;
             enabled = false;
         }

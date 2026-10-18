@@ -51,7 +51,6 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] Text stateText;
     [SerializeField] Text dashText;
     public CharacterState CurrentState { get; private set; } = CharacterState.Idle;
-    public int CurrentDashCharges => currentDashCharges;
 
     // Overrides de velocidad (buffs/debuffs)
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
@@ -76,6 +75,11 @@ public class FirstPersonController : MonoBehaviour
     int _lastDashCharges = -1;
     int _lastMaxDashCharges = -1;
 
+    // --- API pública para la UI ---
+    public int CurrentDashCharges => currentDashCharges;
+    public int MaxDashCharges => maxDashCharges;
+    public event System.Action<int, int> DashChargesChanged;   // (current, max)
+
     void Reset()
     {
         groundCheck = GetComponentInChildren<GroundCheck>();
@@ -88,6 +92,12 @@ public class FirstPersonController : MonoBehaviour
         if (groundCheck == null) groundCheck = GetComponentInChildren<GroundCheck>();
         if (cameraTransform == null && Camera.main != null) cameraTransform = Camera.main.transform;
         currentDashCharges = maxDashCharges;
+    }
+
+    void Start()
+    {
+        // Emitir estado inicial para que la UI se sincronice sin depender del orden de Awake/OnEnable
+        DashChargesChanged?.Invoke(currentDashCharges, maxDashCharges);
     }
 
     void Update()
@@ -116,8 +126,6 @@ public class FirstPersonController : MonoBehaviour
         if (isJumping && rb.linearVelocity.y <= 0f) isJumping = false;
 
         // --- Recarga de cargas de dash ---
-        // Una sola carga por vez, espaciadas SIEMPRE por dashRechargeTime.
-        // No se recuperan cargas mientras estás dasheando.
         if (!isDashing &&
             pendingRechargesCount > 0 &&
             Time.time >= nextRechargeTime)
@@ -125,8 +133,9 @@ public class FirstPersonController : MonoBehaviour
             pendingRechargesCount--;
             currentDashCharges = Mathf.Min(currentDashCharges + 1, maxDashCharges);
 
-            // Re-armar SIEMPRE desde "ahora": garantiza spacing fijo entre cargas,
-            // nunca 2 seguidas por haberse juntado timestamps.
+            // 🔔 Avisar a la UI que cambió el número de cargas
+            DashChargesChanged?.Invoke(currentDashCharges, maxDashCharges);
+
             if (pendingRechargesCount > 0)
                 nextRechargeTime = Time.time + dashRechargeTime;
         }
@@ -137,7 +146,7 @@ public class FirstPersonController : MonoBehaviour
         if (jumpBufferTimer > 0f && coyoteTimer > 0f)
         {
             Vector3 v = rb.linearVelocity;
-            v.y = jumpVelocity;                 // velocidad directa → altura consistente
+            v.y = jumpVelocity;
             rb.linearVelocity = v;
             isJumping = true;
             jumpBufferTimer = 0f;
@@ -196,11 +205,10 @@ public class FirstPersonController : MonoBehaviour
     {
         if (value.isPressed)
         {
-            jumpBufferTimer = jumpBufferTime;   // buffer en vez de saltar directo
+            jumpBufferTimer = jumpBufferTime;
         }
         else
         {
-            // Jump cut al soltar durante el ascenso
             if (isJumping && rb.linearVelocity.y > 0f)
             {
                 Vector3 v = rb.linearVelocity;
@@ -228,14 +236,13 @@ public class FirstPersonController : MonoBehaviour
                               new Vector3(moveInput.x, 0f, moveInput.y) * targetSpeed;
         Vector3 currentHoriz = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        // Elegir aceleración según contexto
         float accel;
         if (!IsGrounded())
             accel = airAcceleration;
         else if (momentumTimer > 0f || currentHoriz.magnitude > targetHoriz.magnitude + 0.5f)
-            accel = momentumDeceleration;   // skid / conservar inercia del dash
+            accel = momentumDeceleration;
         else
-            accel = groundAcceleration;     // snap en suelo
+            accel = groundAcceleration;
 
         Vector3 newHoriz = Vector3.MoveTowards(
             currentHoriz, targetHoriz, accel * Time.fixedDeltaTime);
@@ -255,10 +262,10 @@ public class FirstPersonController : MonoBehaviour
         isDashing = true;
         currentDashCharges--;
 
-        // Registrar la carga pendiente:
-        // - Si no había ciclo de recarga, lo arrancamos ahora.
-        // - Si ya había un ciclo corriendo, NO lo reiniciamos:
-        //   la nueva carga se recuperará en el orden que le toque.
+        // 🔔 Avisar a la UI que se gastó una carga
+        DashChargesChanged?.Invoke(currentDashCharges, maxDashCharges);
+
+        // Registrar la carga pendiente
         pendingRechargesCount++;
         if (pendingRechargesCount == 1)
             nextRechargeTime = Time.time + dashRechargeTime;
@@ -277,7 +284,6 @@ public class FirstPersonController : MonoBehaviour
         isDashing = false;
         momentumTimer = 0.15f;
 
-        // Preservar parte del momentum al salir
         Vector3 vel = rb.linearVelocity;
         vel.x *= dashExitSpeedMultiplier;
         vel.z *= dashExitSpeedMultiplier;

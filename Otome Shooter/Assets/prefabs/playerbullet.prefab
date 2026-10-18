@@ -48,7 +48,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -75,7 +75,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -95,11 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff9472744534544b801741d20e44383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  bulletSpeed: 1000
-  bulletLifetime: 1
-  damage: 10
-  impactEffectPrefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
-  impactFxLifetime: 2
+  lifetime: 5
+  debugLogs: 1
 --- !u!1001 &1705023414643014439
 PrefabInstance:
   m_ObjectHideFlags: 0
