@@ -2694,7 +2694,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 45bfcc7608207a84eaf2c265d58bd59a, type: 2}
     - target: {fileID: 2655027440571538885, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6713706027306177391, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: m_Name
@@ -2708,6 +2708,10 @@ PrefabInstance:
       propertyPath: stateText
       value: 
       objectReference: {fileID: 689510590}
+    - target: {fileID: 7892186737205894889, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7892186737205894889, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: aimRange
       value: 200
@@ -2770,7 +2774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8462855666299085181, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: shootRange
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8462855666299085181, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: maxTargetsPerShot
@@ -2781,6 +2785,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
+--- !u!1 &967040764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2655027440571538885, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
+  m_PrefabInstance: {fileID: 967040763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &967040765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1699861059841294543, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
+  m_PrefabInstance: {fileID: 967040763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &969054867
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,6 +3033,7 @@ GameObject:
   - component: {fileID: 1127918426}
   - component: {fileID: 1127918425}
   - component: {fileID: 1127918429}
+  - component: {fileID: 1127918430}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3146,6 +3161,20 @@ MonoBehaviour:
   defeatPanel: {fileID: 246629366}
   pauseOnGameOver: 1
   showCursorOnGameOver: 1
+--- !u!114 &1127918430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127918424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597993c3cc3ff544c9d75c63ed079d5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  arma1: {fileID: 967040765}
+  arma2: {fileID: 967040764}
 --- !u!1001 &1146371325
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1206,6 +1206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 0}
+  spawnDelay: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1221,8 +1222,8 @@ MonoBehaviour:
   inaccuracyDegrees: 6
   projectilePrefab: {fileID: 3267583428692819455, guid: 14ee1eea1b36eca479c7059143b52e99, type: 3}
   muzzle: {fileID: 536170721938098953}
-  projectileSpeed: 300
-  projectileDamage: 1
+  projectileSpeed: 200
+  projectileDamage: 2
   lineOfSightMask:
     serializedVersion: 2
     m_Bits: 1
