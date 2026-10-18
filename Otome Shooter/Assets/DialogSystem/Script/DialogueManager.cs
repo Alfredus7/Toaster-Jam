@@ -15,6 +15,8 @@ public enum BackgroundAction
     FadeToNormal
 }
 
+
+
 public enum CharacterVisibility
 {
     Keep,
@@ -94,10 +96,12 @@ public class DialogueManager : MonoBehaviour
     // Variable oculta: suma los puntos de cada opción elegida.
     // Se puede leer desde cualquier escena: DialogueManager.HiddenScore
     public static int HiddenScore { get; private set; }
-    public static void ResetHiddenScore()
+    void Awake()
     {
+        // Si este DialogueManager es el de una partida nueva, reseteamos
         HiddenScore = 0;
     }
+
     private int currentIndex = 0;
     private bool isActive = false;
     private bool isTyping = false;
