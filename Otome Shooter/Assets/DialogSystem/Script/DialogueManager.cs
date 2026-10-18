@@ -8,7 +8,18 @@ using UnityEngine.Serialization;
 
 // Lado de pantalla desde el que habla alguien (se usa en las respuestas de las opciones).
 public enum DialogueSide { Left, Right, Narrator }
-
+public enum BackgroundAction
+{
+    Keep,
+    FadeToBlack,
+    FadeToNormal
+}
+public enum CharacterVisibility
+{
+    Keep,
+    Hide,
+    Show
+}
 // Una opción (A o B) que el jugador puede elegir.
 [System.Serializable]
 public class ChoiceOption
@@ -33,6 +44,14 @@ public class ChoicePoint
 public class DialogueManager : MonoBehaviour
 {
     [Header("Referencias UI")]
+
+    [Header("Fondo narrador")]
+    public CanvasGroup fondoNegro;
+    public float duracionFade = 1f;
+
+    private Coroutine fadeFondoCoroutine;
+
+
     [FormerlySerializedAs("characterImage")] // conserva la referencia que ya tenías en la escena
     public Image leftImage;                   // personaje de la izquierda (Aliza)
     public Image rightImage;                  // personaje de la derecha (Chico)
@@ -91,6 +110,8 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         HiddenScore = 0;
+        if (fondoNegro != null)
+            fondoNegro.alpha = 0f;
 
         if (leftImage != null)
         {
@@ -128,6 +149,99 @@ public class DialogueManager : MonoBehaviour
 
         ShowCurrentLine();
     }
+
+    void CambiarFondo(BackgroundAction action)
+    {
+        if (fondoNegro == null) return;
+
+        float destino;
+
+        switch (action)
+        {
+            case BackgroundAction.FadeToBlack:
+                destino = 1f;
+                break;
+
+            case BackgroundAction.FadeToNormal:
+                destino = 0f;
+                break;
+
+            default:
+                return;
+        }
+
+        if (fadeFondoCoroutine != null)
+            StopCoroutine(fadeFondoCoroutine);
+
+        fadeFondoCoroutine = StartCoroutine(
+            FadeFondo(destino)
+        );
+    }
+
+    void CambiarVisibilidadPersonajes(CharacterVisibility action)
+    {
+        switch (action)
+        {
+            case CharacterVisibility.Hide:
+
+                if (leftImage != null)
+                    leftImage.gameObject.SetActive(false);
+
+                if (rightImage != null)
+                    rightImage.gameObject.SetActive(false);
+
+                break;
+
+            case CharacterVisibility.Show:
+
+                if (leftImage != null)
+                    leftImage.gameObject.SetActive(true);
+
+                if (rightImage != null)
+                    rightImage.gameObject.SetActive(true);
+
+                break;
+
+            case CharacterVisibility.Keep:
+                // Mantener el estado actual
+                break;
+        }
+    }
+
+
+    IEnumerator FadeFondo(float alphaDestino)
+    {
+        float alphaInicial = fondoNegro.alpha;
+        float tiempo = 0f;
+
+        if (duracionFade <= 0f)
+        {
+            fondoNegro.alpha = alphaDestino;
+            fadeFondoCoroutine = null;
+            yield break;
+        }
+
+        while (tiempo < duracionFade)
+        {
+            tiempo += Time.deltaTime;
+
+            float progreso = Mathf.Clamp01(
+                tiempo / duracionFade
+            );
+
+            fondoNegro.alpha = Mathf.Lerp(
+                alphaInicial,
+                alphaDestino,
+                progreso
+            );
+
+            yield return null;
+        }
+
+        fondoNegro.alpha = alphaDestino;
+        fadeFondoCoroutine = null;
+    }
+
 
     void ShowCurrentLine()
     {
@@ -169,6 +283,8 @@ public class DialogueManager : MonoBehaviour
         dialogueText.fontStyle = isThought ? FontStyles.Italic : FontStyles.Normal;
 
         SetSpeakerHighlight(side);
+        CambiarFondo(line.backgroundAction);
+        CambiarVisibilidadPersonajes(line.characterVisibility);
         TypeLine(line.text);
     }
 
@@ -362,11 +478,21 @@ public class DialogueManager : MonoBehaviour
 
     // ---------- Avance ----------
 
+
     IEnumerator AutoAdvance()
     {
         yield return new WaitForSeconds(autoDelay);
+
+        if (!isActive || waitingChoice || isTyping)
+            yield break;
+
+        // No avanzar si hay opciones pendientes.
+        if (TryShowChoices())
+            yield break;
+
         NextLine();
     }
+
 
     //public void OnJump(InputValue value)
     //{
@@ -374,41 +500,73 @@ public class DialogueManager : MonoBehaviour
     //    AdvanceLine();
     //}
 
+
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive || waitingChoice) return;
 
-        // Detecta por sí mismo cuándo termina de escribirse la línea, sin depender
-        // del aviso de TypewriterUtility (que puede no llamarse fuera del modo auto)
-        if (wasTyping && !isTyping && !waitingChoice)
-            TryShowChoices();
-        wasTyping = isTyping;
+        // Comprobar las opciones mientras el texto está completo.
+        // Así no dependemos de detectar el cambio de isTyping.
+        if (!isTyping && !showingResponse)
+        {
+            if (TryShowChoices()) return;
+        }
 
-        if ((Keyboard.current != null &&
+        bool clicked =
+            (Keyboard.current != null &&
              Keyboard.current.spaceKey.wasPressedThisFrame) ||
             (Mouse.current != null &&
-             Mouse.current.leftButton.wasPressedThisFrame))
+             Mouse.current.leftButton.wasPressedThisFrame);
+
+        if (clicked)
         {
             AdvanceLine();
         }
     }
 
+
+
     public void AdvanceLine()
     {
-        if (!isActive || waitingChoice) return; // con opciones en pantalla no se avanza con click
+        if (!isActive || waitingChoice) return;
 
         if (isTyping)
         {
-            if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+                typingCoroutine = null;
+            }
+
             dialogueText.text = fullText;
             isTyping = false;
-            TryShowChoices(); // si el click completó la línea, también salen las opciones
+
+            if (TryShowChoices()) return;
+
+            if (autoMode)
+            {
+                if (autoCoroutine != null)
+                    StopCoroutine(autoCoroutine);
+
+                autoCoroutine = StartCoroutine(AutoAdvance());
+            }
+
+            return;
         }
-        else
+
+        // Antes de avanzar, verificar si existen opciones.
+        // Esto evita saltarlas cuando se hace clic rápidamente.
+        if (TryShowChoices()) return;
+
+        if (autoCoroutine != null)
         {
-            NextLine();
+            StopCoroutine(autoCoroutine);
+            autoCoroutine = null;
         }
+
+        NextLine();
     }
+
 
     public void SkipDialogue()
     {
