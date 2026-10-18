@@ -1,56 +1,50 @@
 using UnityEngine;
 
+public interface IDamageable
+{
+    void TakeDamage(float amount, Vector3 point, Vector3 normal);
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    [Header("Configuración de la Bala")]
-    [SerializeField, Tooltip("Velocidad con la que sale disparada la bala.")]
-    float bulletSpeed = 30f;
-
-    [SerializeField, Tooltip("Tiempo en segundos antes de que la bala se destruya automáticamente si no choca con nada.")]
-    float bulletLifetime = 3f;
-
-    [Header("Efecto de Impacto")]
-    [SerializeField, Tooltip("Efecto visual o de partículas opcional al impactar.")]
-    GameObject impactEffectPrefab;
+    [SerializeField] float bulletSpeed = 30f;
+    [SerializeField] float bulletLifetime = 3f;
+    [SerializeField] float damage = 10f;
+    [SerializeField] GameObject impactEffectPrefab;
+    [SerializeField] float impactFxLifetime = 2f;
 
     Rigidbody rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;                                              // ← CRÍTICO
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic; // ← anti-tunneling
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
-    void Start()
-    {
-        // Destruir la bala automáticamente después del tiempo de vida
-        Destroy(gameObject, bulletLifetime);
-    }
+    void Start() => Destroy(gameObject, bulletLifetime);
 
-    /// <summary>
-    /// Inicializa el movimiento de la bala. Llamado desde el WeaponController.
-    /// </summary>
     public void Initialize(Vector3 shootDirection)
     {
-        if (rb != null)
-        {
-            // Velocidad pura basada únicamente en la dirección y la velocidad configurada
-            rb.linearVelocity = shootDirection * bulletSpeed;
-        }
+        if (rb != null) rb.linearVelocity = shootDirection * bulletSpeed;
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Bala impactó contra: " + collision.gameObject.name);
+        ContactPoint cp = collision.contacts[0];
 
-        // Instanciar efecto de impacto si está asignado
+        if (collision.collider.TryGetComponent(out IDamageable dmg))
+            dmg.TakeDamage(damage, cp.point, cp.normal);
+
         if (impactEffectPrefab != null)
         {
-            ContactPoint contact = collision.contacts[0];
-            Instantiate(impactEffectPrefab, contact.point, Quaternion.LookRotation(contact.normal));
+            var fx = Instantiate(impactEffectPrefab, cp.point, Quaternion.LookRotation(cp.normal));
+            Destroy(fx, impactFxLifetime);   // ← fix fuga
         }
 
-        // Destruir la bala al chocar
         Destroy(gameObject);
     }
 }

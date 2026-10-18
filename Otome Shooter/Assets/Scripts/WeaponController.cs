@@ -3,123 +3,127 @@ using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
-    [Header("Configuración de Disparo")]
-    [SerializeField, Tooltip("Prefab de la bala (debe tener Bullet, Rigidbody y Collider).")]
-    GameObject bulletPrefab;
+    [Header("Disparo")]
+    [SerializeField] Transform muzzlePoint;
+    [SerializeField] Transform cameraTransform;
+    [SerializeField] GameObject muzzleEffectPrefab;
+    [SerializeField, Tooltip("Segundos entre disparos.")] float fireRate = 0.2f;
+    [SerializeField, Tooltip("Alcance del raycast de aim (crosshair).")] float aimRange = 200f;
+    [SerializeField] LayerMask aimMask = ~0;
+    [SerializeField, Tooltip("Lifetime del muzzle flash.")] float muzzleFxLifetime = 1f;
 
-    [SerializeField, Tooltip("Punta del arma (Transform hijo que marca el inicio del disparo).")]
-    Transform muzzlePoint;
+    [Header("Hitscan")]
+    [SerializeField, Tooltip("Alcance máximo del disparo.")] float shootRange = 200f;
+    [SerializeField, Tooltip("Capas que el disparo puede impactar.")] LayerMask shootMask = ~0;
+    [SerializeField] float damage = 10f;
+    [SerializeField] GameObject impactEffectPrefab;
+    [SerializeField] float impactFxLifetime = 2f;
+    [SerializeField] bool drawDebugRay = true;
 
-    [SerializeField, Tooltip("Efecto visual o de partículas al disparar (Fogonazo/Muzzle Flash).")]
-    GameObject muzzleEffectPrefab;
+    [Header("Recoil")]
+    [SerializeField] float recoilStrength = 1f;
+    [SerializeField] float recoilRecoveryMultiplier = 5f;
+    [SerializeField] float maxPitch = 20f;
 
-    [SerializeField, Tooltip("Tiempo de espera entre disparos (Cadencia).")]
-    float fireRate = 0.2f;
-
-    [Header("Configuración de Retroceso (Recoil)")]
-    [SerializeField, Tooltip("Intensidad general del retroceso (desplazamiento e inclinación).")]
-    float recoilStrength = 1f;
-
-    [SerializeField, Tooltip("Ajuste de velocidad de recuperación ligado a la cadencia. Mayor valor = el arma vuelve más rápido a su posición.")]
-    float recoilRecoveryMultiplier = 5f;
-
-    [Header("Gizmos y Visualización")]
+    [Header("Gizmos")]
     [SerializeField] bool showGizmos = true;
-    [SerializeField, Tooltip("Longitud del rayo de guía en la ventana Scene.")]
-    float gizmoLength = 2f;
+    [SerializeField] float gizmoLength = 2f;
 
-    // Variables internas de retroceso
     Vector3 originalLocalPosition;
     Quaternion originalLocalRotation;
     Vector3 currentRecoilPosition;
-    Quaternion currentRecoilRotation = Quaternion.identity;
+    float currentRecoilPitch;
 
-    // Referencias
-    Collider[] playerColliders;
-    float nextFireTime = 0f;
+    float nextFireTime;
 
     void Awake()
     {
-        playerColliders = GetComponentsInParent<Collider>();
-
-        // Guardamos la posición y rotación local inicial del arma
         originalLocalPosition = transform.localPosition;
         originalLocalRotation = transform.localRotation;
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
     }
 
     void Update()
     {
-        // Cálculo dinámico de la velocidad de recuperación basado en la cadencia
-        float dynamicReturnSpeed = (1f / Mathf.Max(fireRate, 0.001f)) * recoilRecoveryMultiplier;
+        float k = (1f / Mathf.Max(fireRate, 0.001f)) * recoilRecoveryMultiplier;
+        float t = 1f - Mathf.Exp(-k * Time.deltaTime);
+        currentRecoilPosition = Vector3.Lerp(currentRecoilPosition, Vector3.zero, t);
+        currentRecoilPitch = Mathf.Lerp(currentRecoilPitch, 0f, t);
 
-        // Interpolar suavemente el retroceso de vuelta a cero
-        currentRecoilPosition = Vector3.Lerp(currentRecoilPosition, Vector3.zero, dynamicReturnSpeed * Time.deltaTime);
-        currentRecoilRotation = Quaternion.Slerp(currentRecoilRotation, Quaternion.identity, dynamicReturnSpeed * Time.deltaTime);
-
-        // Aplicar el resultado al transform local del arma
         transform.localPosition = originalLocalPosition + currentRecoilPosition;
-        transform.localRotation = originalLocalRotation * currentRecoilRotation;
+        transform.localRotation = originalLocalRotation * Quaternion.Euler(currentRecoilPitch, 0f, 0f);
     }
 
-    public void OnAttack(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            TryShoot();
-        }
-    }
+    public void OnAttack(InputValue value) => TryShoot();
 
     void TryShoot()
     {
         if (Time.time < nextFireTime) return;
         nextFireTime = Time.time + fireRate;
 
-        // Aplicar el impulso brusco del retroceso
-        Vector3 basePositionKick = new Vector3(0f, 0f, -0.05f);
-        Vector3 baseRotationKick = new Vector3(-10f, 0f, 0f);
+        // Kick de recoil
+        currentRecoilPosition += new Vector3(0f, 0f, -0.05f) * recoilStrength;
+        currentRecoilPitch = Mathf.Max(currentRecoilPitch - 10f * recoilStrength, -maxPitch);
+        currentRecoilPosition = Vector3.ClampMagnitude(currentRecoilPosition, 0.2f);
 
-        currentRecoilPosition += basePositionKick * recoilStrength;
-        currentRecoilRotation *= Quaternion.Euler(baseRotationKick * recoilStrength);
-
-        if (bulletPrefab != null && muzzlePoint != null)
+        if (muzzlePoint == null)
         {
-            // 1. Instanciar el efecto de fogonazo COMO HIJO del muzzlePoint
-            if (muzzleEffectPrefab != null)
-            {
-                // El cuarto parámetro (muzzlePoint) asigna este objeto directamente como su hijo
-                GameObject muzzleEffect = Instantiate(muzzleEffectPrefab, muzzlePoint.position, muzzlePoint.rotation, muzzlePoint);
-            }
-            //aqui quiero que la bala use el forward del arma como direcion
-            // 2. Instanciar la bala
-            GameObject bulletObj = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
+            Debug.LogWarning("Falta MuzzlePoint.");
+            return;
+        }
 
-            // 3. Ignorar colisión inicial entre la bala y los colliders del jugador
-            Collider bulletCollider = bulletObj.GetComponent<Collider>();
-            if (bulletCollider != null && playerColliders != null)
-            {
-                foreach (Collider playerCol in playerColliders)
-                {
-                    Physics.IgnoreCollision(bulletCollider, playerCol, true);
-                }
-            }
+        // Muzzle flash (autodestruible)
+        if (muzzleEffectPrefab != null)
+        {
+            var fx = Instantiate(muzzleEffectPrefab, muzzlePoint.position, muzzlePoint.rotation, muzzlePoint);
+            Destroy(fx, muzzleFxLifetime);
+        }
 
-            // 4. Inicializar el movimiento independiente de la bala
-            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
-            if (bulletScript != null)
+        // Dirección: cámara → crosshair → punto → desde el cañón
+        Vector3 shootDir = GetAimDirection();
+        Vector3 origin = muzzlePoint.position;
+
+        // Hitscan: un solo raycast desde el cañón
+        if (Physics.Raycast(origin, shootDir, out RaycastHit hit,
+                            shootRange, shootMask, QueryTriggerInteraction.Ignore))
+        {
+            if (drawDebugRay)
+                Debug.DrawLine(origin, hit.point, Color.yellow, 0.5f);
+
+            // Daño
+            if (hit.collider.TryGetComponent(out IDamageable dmg))
+                dmg.TakeDamage(damage, hit.point, hit.normal);
+
+            // Efecto de impacto SOLO donde choca el rayo
+            if (impactEffectPrefab != null)
             {
-                bulletScript.Initialize(muzzlePoint.forward);
+                var fx = Instantiate(impactEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(fx, impactFxLifetime);
             }
         }
-        else
+        else if (drawDebugRay)
         {
-            Debug.LogWarning("Falta asignar el Prefab de la bala o el Muzzle Point en el WeaponController.");
+            Debug.DrawLine(origin, origin + shootDir * shootRange, Color.red, 0.5f);
         }
+    }
+
+    Vector3 GetAimDirection()
+    {
+        if (cameraTransform == null) return muzzlePoint.forward;
+
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        Vector3 aimPoint = Physics.Raycast(ray, out RaycastHit hit, aimRange, aimMask)
+            ? hit.point
+            : ray.GetPoint(aimRange);
+
+        Vector3 dir = aimPoint - muzzlePoint.position;
+        return dir.sqrMagnitude > 0.0001f ? dir.normalized : muzzlePoint.forward;
     }
 
     void OnDrawGizmos()
     {
         if (!showGizmos || muzzlePoint == null) return;
-
         Gizmos.color = Color.red;
         Gizmos.DrawRay(muzzlePoint.position, muzzlePoint.forward * gizmoLength);
         Gizmos.DrawWireSphere(muzzlePoint.position, 0.05f);

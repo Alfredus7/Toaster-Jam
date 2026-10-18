@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI; // Necesario si usas el Text clásico de UI
-// using TMPro; // Descomenta esta línea si usas TextMeshPro
+using UnityEngine.UI;
+// using TMPro; // Descomentá si usás TextMeshPro
 
 public enum CharacterState
 {
     Idle,
     Walk,
-    Dash,
-    Jump
+    Jump,
+    Fall,
+    Dash
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -17,196 +19,268 @@ public class FirstPersonController : MonoBehaviour
 {
     [Header("Movimiento")]
     public float speed = 5f;
+    [SerializeField, Tooltip("Aceleración en suelo. Alto = respuesta instantánea.")]
+    float groundAcceleration = 200f;
+    [SerializeField, Tooltip("Aceleración en el aire.")]
+    float airAcceleration = 25f;
+    [SerializeField, Tooltip("Desaceleración cuando vas más rápido que la velocidad objetivo (skid / momentum).")]
+    float momentumDeceleration = 35f;
 
     [Header("Salto")]
-    public float jumpStrength = 2f;
+    [SerializeField, Tooltip("Velocidad vertical al saltar (unidades/s).")]
+    public float jumpVelocity = 8f;
+    [SerializeField, Range(0f, 1f), Tooltip("Multiplicador al soltar el salto durante el ascenso.")]
+    float jumpCutMultiplier = 0.5f;
+    [SerializeField, Tooltip("Tiempo para saltar después de salir de una plataforma.")]
+    float coyoteTime = 0.1f;
+    [SerializeField, Tooltip("Ventana para guardar un salto pulsado antes de tocar suelo.")]
+    float jumpBufferTime = 0.1f;
     public event System.Action Jumped;
-    [SerializeField, Tooltip("Evita saltar en el aire.")]
-    GroundCheck groundCheck;
+    [SerializeField] GroundCheck groundCheck;
 
     [Header("Dash (Estilo ULTRAKILL)")]
     public float dashSpeed = 25f;
     public float dashDuration = 0.2f;
-    [SerializeField, Tooltip("Número máximo de cargas de dash acumulables.")]
     public int maxDashCharges = 3;
-    [SerializeField, Tooltip("Tiempo en segundos que tarda en recargar UNA carga.")]
     public float dashRechargeTime = 1.2f;
+    [SerializeField, Range(0f, 1f), Tooltip("Porcentaje de velocidad que se conserva al terminar el dash.")]
+    float dashExitSpeedMultiplier = 0.7f;
     [SerializeField] Transform cameraTransform;
 
     [Header("UI Estado y Dash")]
-    [SerializeField] Text stateText; // Cambiar por TextMeshProUGUI si usas TextMeshPro
-    [SerializeField] Text dashText;  // Texto dedicado para mostrar las cargas (ej. Dash: 3/3)
+    [SerializeField] Text stateText;
+    [SerializeField] Text dashText;
     public CharacterState CurrentState { get; private set; } = CharacterState.Idle;
+    public int CurrentDashCharges => currentDashCharges;
 
-    // Variables internas
+    // Overrides de velocidad (buffs/debuffs)
+    public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
+
+    // --- Internos ---
     Rigidbody rb;
     Vector2 moveInput;
     bool isDashing;
+    bool isJumping;
+    float coyoteTimer;
+    float jumpBufferTimer;
+    float momentumTimer;
 
-    // Cargas y temporizadores de dash
     int currentDashCharges;
-    float dashRechargeTimer;
 
-    // Para sobrescribir velocidad externamente si se necesita
-    public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
+    // --- Recarga de dash (secuencial, una carga por vez) ---
+    int pendingRechargesCount;
+    float nextRechargeTime;
+
+    // Cache UI
+    CharacterState _lastState;
+    int _lastDashCharges = -1;
+    int _lastMaxDashCharges = -1;
 
     void Reset()
     {
         groundCheck = GetComponentInChildren<GroundCheck>();
-        if (Camera.main != null)
-            cameraTransform = Camera.main.transform;
+        if (Camera.main != null) cameraTransform = Camera.main.transform;
     }
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (groundCheck == null)
-            groundCheck = GetComponentInChildren<GroundCheck>();
-        if (cameraTransform == null && Camera.main != null)
-            cameraTransform = Camera.main.transform;
-
-        // Inicializar cargas al máximo al arrancar
+        if (groundCheck == null) groundCheck = GetComponentInChildren<GroundCheck>();
+        if (cameraTransform == null && Camera.main != null) cameraTransform = Camera.main.transform;
         currentDashCharges = maxDashCharges;
     }
 
     void Update()
     {
-        HandleDashRecharge();
+        UpdateTimers();
+        TryJump();
         UpdateCharacterState();
         UpdateUI();
     }
 
-    void HandleDashRecharge()
-    {
-        // Si no tenemos todas las cargas completas, recargamos con el tiempo
-        if (currentDashCharges < maxDashCharges)
-        {
-            dashRechargeTimer += Time.deltaTime;
+    bool IsGrounded() => groundCheck == null || groundCheck.isGrounded;
 
-            if (dashRechargeTimer >= dashRechargeTime)
-            {
-                currentDashCharges++;
-                dashRechargeTimer = 0f; // Reiniciamos el temporizador para la siguiente carga
-            }
-        }
-        else
+    void UpdateTimers()
+    {
+        // Coyote time
+        if (IsGrounded()) coyoteTimer = coyoteTime;
+        else coyoteTimer -= Time.deltaTime;
+
+        // Jump buffer
+        if (jumpBufferTimer > 0f) jumpBufferTimer -= Time.deltaTime;
+
+        // Ventana de momentum tras el dash
+        if (momentumTimer > 0f) momentumTimer -= Time.deltaTime;
+
+        // Jump cut: dejar de cortar cuando ya no ascendemos
+        if (isJumping && rb.linearVelocity.y <= 0f) isJumping = false;
+
+        // --- Recarga de cargas de dash ---
+        // Una sola carga por vez, espaciadas SIEMPRE por dashRechargeTime.
+        // No se recuperan cargas mientras estás dasheando.
+        if (!isDashing &&
+            pendingRechargesCount > 0 &&
+            Time.time >= nextRechargeTime)
         {
-            // Si estamos al máximo, reseteamos el temporizador
-            dashRechargeTimer = 0f;
+            pendingRechargesCount--;
+            currentDashCharges = Mathf.Min(currentDashCharges + 1, maxDashCharges);
+
+            // Re-armar SIEMPRE desde "ahora": garantiza spacing fijo entre cargas,
+            // nunca 2 seguidas por haberse juntado timestamps.
+            if (pendingRechargesCount > 0)
+                nextRechargeTime = Time.time + dashRechargeTime;
+        }
+    }
+
+    void TryJump()
+    {
+        if (jumpBufferTimer > 0f && coyoteTimer > 0f)
+        {
+            Vector3 v = rb.linearVelocity;
+            v.y = jumpVelocity;                 // velocidad directa → altura consistente
+            rb.linearVelocity = v;
+            isJumping = true;
+            jumpBufferTimer = 0f;
+            coyoteTimer = 0f;
+            Jumped?.Invoke();
         }
     }
 
     void UpdateCharacterState()
     {
-        // 1. Prioridad: Dash
-        if (isDashing)
+        if (isDashing) { CurrentState = CharacterState.Dash; return; }
+
+        if (!IsGrounded())
         {
-            CurrentState = CharacterState.Dash;
+            CurrentState = rb.linearVelocity.y > 0.1f
+                ? CharacterState.Jump
+                : CharacterState.Fall;
             return;
         }
 
-        // 2. Prioridad: Salto / En el aire
-        if (groundCheck != null && !groundCheck.isGrounded)
-        {
-            CurrentState = CharacterState.Jump;
-            return;
-        }
-
-        // 3. Estado en tierra: Movimiento o Reposo
-        if (moveInput.sqrMagnitude > 0.01f)
-        {
-            CurrentState = CharacterState.Walk;
-        }
-        else
-        {
-            CurrentState = CharacterState.Idle;
-        }
+        CurrentState = moveInput.sqrMagnitude > 0.01f
+            ? CharacterState.Walk
+            : CharacterState.Idle;
     }
 
     void UpdateUI()
     {
-        if (stateText != null)
+        if (stateText != null && CurrentState != _lastState)
         {
-            stateText.text = $"state: {CurrentState.ToString().ToLower()}";
+            stateText.text = CurrentState switch
+            {
+                CharacterState.Idle => "state: idle",
+                CharacterState.Walk => "state: walk",
+                CharacterState.Jump => "state: jump",
+                CharacterState.Fall => "state: fall",
+                CharacterState.Dash => "state: dash",
+                _ => string.Empty
+            };
+            _lastState = CurrentState;
         }
 
-        if (dashText != null)
+        if (dashText != null &&
+            (currentDashCharges != _lastDashCharges || maxDashCharges != _lastMaxDashCharges))
         {
             dashText.text = $"Dash: {currentDashCharges}/{maxDashCharges}";
+            _lastDashCharges = currentDashCharges;
+            _lastMaxDashCharges = maxDashCharges;
         }
     }
 
-    // --- MÉTODOS DE ENTRADA (New Input System - Send Messages) ---
+    // --- ENTRADA (New Input System) ---
 
-    public void OnMove(InputValue value)
-    {
-        moveInput = value.Get<Vector2>();
-    }
+    public void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
 
     public void OnJump(InputValue value)
     {
-        if (value.isPressed && (!groundCheck || groundCheck.isGrounded))
+        if (value.isPressed)
         {
-            rb.AddForce(Vector3.up * 100 * jumpStrength);
-            Jumped?.Invoke();
+            jumpBufferTimer = jumpBufferTime;   // buffer en vez de saltar directo
+        }
+        else
+        {
+            // Jump cut al soltar durante el ascenso
+            if (isJumping && rb.linearVelocity.y > 0f)
+            {
+                Vector3 v = rb.linearVelocity;
+                v.y *= jumpCutMultiplier;
+                rb.linearVelocity = v;
+                isJumping = false;
+            }
         }
     }
 
     public void OnDash(InputValue value)
     {
-        // Solo puede dashear si presiona la tecla y tiene al menos 1 carga disponible
         if (value.isPressed && currentDashCharges > 0 && !isDashing)
-        {
             StartCoroutine(PerformDash());
-        }
     }
 
-    // -------------------------------------------------------------
+    // --- FÍSICA ---
 
     void FixedUpdate()
     {
         if (isDashing) return;
 
-        float targetMovingSpeed = speed;
+        float targetSpeed = GetTargetSpeed();
+        Vector3 targetHoriz = transform.rotation *
+                              new Vector3(moveInput.x, 0f, moveInput.y) * targetSpeed;
+        Vector3 currentHoriz = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-        if (speedOverrides.Count > 0)
-        {
-            targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
-        }
+        // Elegir aceleración según contexto
+        float accel;
+        if (!IsGrounded())
+            accel = airAcceleration;
+        else if (momentumTimer > 0f || currentHoriz.magnitude > targetHoriz.magnitude + 0.5f)
+            accel = momentumDeceleration;   // skid / conservar inercia del dash
+        else
+            accel = groundAcceleration;     // snap en suelo
 
-        Vector2 targetVelocity = new Vector2(moveInput.x * targetMovingSpeed, moveInput.y * targetMovingSpeed);
-        rb.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.y);
+        Vector3 newHoriz = Vector3.MoveTowards(
+            currentHoriz, targetHoriz, accel * Time.fixedDeltaTime);
+
+        rb.linearVelocity = new Vector3(newHoriz.x, rb.linearVelocity.y, newHoriz.z);
     }
 
-    System.Collections.IEnumerator PerformDash()
+    float GetTargetSpeed()
+    {
+        if (speedOverrides.Count > 0)
+            return speedOverrides[speedOverrides.Count - 1]();
+        return speed;
+    }
+
+    IEnumerator PerformDash()
     {
         isDashing = true;
-        currentDashCharges--; // Consumimos una carga
+        currentDashCharges--;
 
-        Vector3 dashDirection;
-        if (cameraTransform != null)
-        {
-            dashDirection = cameraTransform.forward;
-            dashDirection.y = 0f;
-            dashDirection.Normalize();
-        }
-        else
-        {
-            dashDirection = transform.forward;
-            dashDirection.y = 0f;
-            dashDirection.Normalize();
-        }
+        // Registrar la carga pendiente:
+        // - Si no había ciclo de recarga, lo arrancamos ahora.
+        // - Si ya había un ciclo corriendo, NO lo reiniciamos:
+        //   la nueva carga se recuperará en el orden que le toque.
+        pendingRechargesCount++;
+        if (pendingRechargesCount == 1)
+            nextRechargeTime = Time.time + dashRechargeTime;
 
-        if (dashDirection == Vector3.zero)
-        {
-            dashDirection = transform.forward;
-        }
+        // Dirección horizontal desde la cámara
+        Vector3 dashDir = cameraTransform != null ? cameraTransform.forward : transform.forward;
+        dashDir.y = 0f;
+        if (dashDir.sqrMagnitude < 0.001f) dashDir = transform.forward;
+        dashDir.Normalize();
 
-        float currentVerticalVelocity = rb.linearVelocity.y;
-        rb.linearVelocity = new Vector3(dashDirection.x * dashSpeed, currentVerticalVelocity, dashDirection.z * dashSpeed);
+        float savedY = rb.linearVelocity.y;
+        rb.linearVelocity = dashDir * dashSpeed + Vector3.up * savedY;
 
         yield return new WaitForSeconds(dashDuration);
 
         isDashing = false;
+        momentumTimer = 0.15f;
+
+        // Preservar parte del momentum al salir
+        Vector3 vel = rb.linearVelocity;
+        vel.x *= dashExitSpeedMultiplier;
+        vel.z *= dashExitSpeedMultiplier;
+        rb.linearVelocity = vel;
     }
 }
