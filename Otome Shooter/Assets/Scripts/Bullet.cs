@@ -1,49 +1,58 @@
 using UnityEngine;
 
-public interface IDamageable
-{
-    void TakeDamage(float amount, Vector3 point, Vector3 normal);
-}
-
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+[RequireComponent(typeof(Collider))]
+public class Projectile : MonoBehaviour
 {
-    [SerializeField] float bulletSpeed = 30f;
-    [SerializeField] float bulletLifetime = 3f;
-    [SerializeField] float damage = 10f;
-    [SerializeField] GameObject impactEffectPrefab;
-    [SerializeField] float impactFxLifetime = 2f;
+    [SerializeField] float lifetime = 5f;
+    [SerializeField] bool debugLogs = true;
 
+    Vector3 direction;
+    float speed;
+    float damage;
+    GameObject owner;
     Rigidbody rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;                                              // ← CRÍTICO
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic; // ← anti-tunneling
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.useGravity = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        GetComponent<Collider>().isTrigger = true;
+
+        if (debugLogs) Debug.Log($"[Projectile] Awake en {name}");
     }
 
-    void Start() => Destroy(gameObject, bulletLifetime);
-
-    public void Initialize(Vector3 shootDirection)
+    public void Init(Vector3 velocity, float dmg, GameObject shooter)
     {
-        if (rb != null) rb.linearVelocity = shootDirection * bulletSpeed;
+        direction = velocity.normalized;
+        speed = velocity.magnitude;
+        damage = dmg;
+        owner = shooter;
+        Destroy(gameObject, lifetime);
+
+        if (debugLogs)
+            Debug.Log($"[Projectile] Init: dir={direction}, speed={speed}, dmg={damage}, owner={owner?.name}");
     }
 
-    void OnCollisionEnter(Collision collision)
+    void FixedUpdate()
     {
-        ContactPoint cp = collision.contacts[0];
+        rb.linearVelocity = direction * speed;
+    }
 
-        if (collision.collider.TryGetComponent(out IDamageable dmg))
-            dmg.TakeDamage(damage, cp.point, cp.normal);
-
-        if (impactEffectPrefab != null)
+    void OnTriggerEnter(Collider other)
+    {
+        if (owner != null &&
+            (other.gameObject == owner || other.transform.IsChildOf(owner.transform)))
         {
-            var fx = Instantiate(impactEffectPrefab, cp.point, Quaternion.LookRotation(cp.normal));
-            Destroy(fx, impactFxLifetime);   // ← fix fuga
+            if (debugLogs) Debug.Log($"[Projectile] ignorando al dueño ({other.name})");
+            return;
         }
+
+        if (debugLogs) Debug.Log($"[Projectile] impactó '{other.name}' (capa: {LayerMask.LayerToName(other.gameObject.layer)})");
+
+        if (other.TryGetComponent<IDamageable>(out var dmg) && dmg.IsAlive)
+            dmg.TakeDamage(damage, transform.position, -direction);
 
         Destroy(gameObject);
     }
