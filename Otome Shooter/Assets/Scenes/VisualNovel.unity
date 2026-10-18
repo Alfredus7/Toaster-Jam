@@ -371,7 +371,7 @@ MonoBehaviour:
   leftCharacterName: Aliza
   leftAliases:
   - Mente
-  rightCharacterName: Chico
+  rightCharacterName: Arthur
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   rightAppearsAtLine: 8
@@ -838,8 +838,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -454, y: -107}
-  m_SizeDelta: {x: 2233.914, y: 1622.1426}
+  m_AnchoredPosition: {x: -535, y: -72.184}
+  m_SizeDelta: {x: 1769.195, y: 1084.612}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048586599
 MonoBehaviour:
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3d20980355a6bad478ca3e8ebddb3e66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c7a0cd8a15456b45b4ce82f40b9150d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1309,8 +1309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 249, y: -32.55}
-  m_SizeDelta: {x: 1155.573, y: 887.272}
+  m_AnchoredPosition: {x: 537, y: -22}
+  m_SizeDelta: {x: 1769.195, y: 1084.612}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1282679050
 CanvasRenderer:
@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3bdc1aafd3eb91248b7a84ff5cc98728, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b94c946d7eae6584ea19bb7cbfef1e27, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
