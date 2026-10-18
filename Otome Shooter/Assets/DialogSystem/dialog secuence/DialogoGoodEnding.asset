@@ -93,3 +93,11 @@ MonoBehaviour:
     minimumScore: 0
     lowScoreText: 
     highScoreText: 
+  - character: {fileID: 0}
+    text: y asi el good ending fue hecho
+    backgroundAction: 1
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
