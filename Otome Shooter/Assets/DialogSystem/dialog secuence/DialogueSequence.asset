@@ -344,7 +344,7 @@ MonoBehaviour:
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: 
     backgroundAction: 1
-    characterVisibility: 0
+    characterVisibility: 3
     useScoreDialogue: 1
     minimumScore: 3
     lowScoreText: supongo que las armas simples tambien sirven jaja lol xd ola

@@ -94,7 +94,10 @@ public class DialogueManager : MonoBehaviour
     // Variable oculta: suma los puntos de cada opción elegida.
     // Se puede leer desde cualquier escena: DialogueManager.HiddenScore
     public static int HiddenScore { get; private set; }
-
+    public static void ResetHiddenScore()
+    {
+        HiddenScore = 0;
+    }
     private int currentIndex = 0;
     private bool isActive = false;
     private bool isTyping = false;
@@ -113,7 +116,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        HiddenScore = 0;
+        //HiddenScore = 0;
         if (fondoNegro != null)
             fondoNegro.alpha = 0f;
 
