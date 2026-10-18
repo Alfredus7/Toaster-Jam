@@ -17,163 +17,335 @@ MonoBehaviour:
     text: Mi nombre es Aliza
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: Soy una chica normal en una escuela normal.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Al igual que el resto me coloco el pantal\xF3n una pierna a la vez."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Ser\xEDa genial colocarse el pantal\xF3n de una."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Talvez en el futuro hayan pantalones as\xED de avanzados.\t"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xBFQu\xE9 m\xE1s deparar\xEDa el futuro? \xBFRobots?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xBFCu\xE1ntos disparos me aguantar\xEDan un robot?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xA1pium! \xA1pium! \xA1pium!"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: Alguien se acerca.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
     text: "Quer\xEDa hablar contigo"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: ec667949457dc204b97501d4899e2e64, type: 2}
     text: "\xBFConmigo\u2026? \xBFPara que quiere hablar conmigo?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: ec667949457dc204b97501d4899e2e64, type: 2}
     text: "\xBFEs una confesi\xF3n\u2026? Debe ser eso \xBFno?"
     backgroundAction: 0
     characterVisibility: 0
-  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
     text: "\xBFQuer\xEDa saber si hiciste la tarea para ma\xF1ana?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xBFQu\xE9 si hice la tarea?"
     backgroundAction: 0
     characterVisibility: 0
-  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: Debe ser una prueba para saber si soy responsable y apta para el matrimonio.
     backgroundAction: 0
     characterVisibility: 0
-  - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: Claro que lo hice. Siempre pienso en mi futuro.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: El futuro es importante, hoy solo soy una chica normal.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Pero en el futuro ser\xE9 alguien\u2026 m\xE1s alta y con dinero."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: "Ser\xE9 poderosa, nadie podr\xEDa vencerme. Ni siquiera un robot gigante."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
-    text: "Podr\xEDamos reunirnos para hacer la tarea junto."
+    text: "Podr\xEDamos reunirnos para hacer la tarea juntos."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: 
     backgroundAction: 0
     characterVisibility: 0
-  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
     text: "\xBFEn donde podr\xEDamos reunirnos?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
     text: "Por m\xED me parece bien donde sea."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: Bien, he respondido.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: "Sigue as\xED."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 10498a8be2353d742888e9197821ed23, type: 2}
     text: "Creo que hay un lugar cerca de aqu\xED."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: "\xA1Se puede! \xA1Se puede!"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
     text: "Creo que s\xE9 de donde hablas."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
     text: Me gusta ese lugar.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: Lo hice!. Fue una respuesta espectacular.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 10498a8be2353d742888e9197821ed23, type: 2}
     text: Creo que va a abrir dentro de poco.
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
     text: "Increible, deberiamos ir ah\xED."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: 'La estoy rompiendo. '
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Mis respuestas est\xE1n a\xF1os de diferencia del resto."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "A\xF1os en el futuro."
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "Con robots, armas con luces y caos\u2026"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
     text: "\xBFQu\xE9 opinas? \xBFVamos luego?"
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: 
     backgroundAction: 0
     characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: "Luces de ne\xF3n, robots."
     backgroundAction: 1
     characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: Las luces fuera de la naturaleza invaden tu vista.
     backgroundAction: 1
     characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
   - character: {fileID: 0}
     text: "Portando un arma en tu mano siente presencia con m\xE1s metal que alma en ellos."
     backgroundAction: 1
     characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 3
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: 
+    backgroundAction: 1
+    characterVisibility: 3
+    useScoreDialogue: 1
+    minimumScore: 3
+    lowScoreText: supongo que las armas simples tambien sirven jaja lol xd ola
+    highScoreText: seria muy cool tener un arma potente jejeje muuuy cool
