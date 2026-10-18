@@ -26,7 +26,7 @@ MonoBehaviour:
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xBFQu\xE9 m\xE1s deparar\xEDa el futuro? \xBFRobots?"
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "\t\xBFCu\xE1ntos disparos me aguantar\xEDan un robot?"
+    text: "\xBFCu\xE1ntos disparos me aguantar\xEDan un robot?"
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
     text: "\xA1pium! \xA1pium! \xA1pium!"
   - character: {fileID: 0}

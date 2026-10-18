@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
     public string leftCharacterName = "Aliza";
     [Tooltip("Otros nombres que hablan desde la izquierda. Se muestran en cursiva (ej. Mente = pensamientos)")]
     public string[] leftAliases = { "Mente" };
-    public string rightCharacterName = "Chico";
+    public string rightCharacterName = "Arthur";
     public Color activeColor = Color.white;                            // el que habla
     public Color inactiveColor = new Color(0.5f, 0.5f, 0.5f, 1f);      // el que escucha
 
