@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: Mi nombre es Aliza
+    text: Mi nombre es Aliza.
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     minimumScore: 3
     lowScoreText: 
     highScoreText: 
-  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
     text: "Ser\xEDa genial colocarse el pantal\xF3n de una."
     backgroundAction: 0
     characterVisibility: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
     minimumScore: 3
     lowScoreText: 
     highScoreText: 
-  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "Talvez en el futuro hayan pantalones as\xED de avanzados.\t"
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: "\xBFTe lo imaginas? Talvez en el futuro hayan pantalones as\xED de avanzados... Ser\xEDan pantalones con luces de ne\xF3n.\t"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -61,8 +61,8 @@ MonoBehaviour:
     minimumScore: 3
     lowScoreText: 
     highScoreText: 
-  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "\xBFCu\xE1ntos disparos me aguantar\xEDan un robot?"
+  - character: {fileID: 11400000, guid: e8c9ff6abe3d12f419308e10154bc551, type: 2}
+    text: "\xBFCu\xE1ntos disparos me aguantar\xEDa un robot?"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "\xA1pium! \xA1pium! \xA1pium!"
+    text: "\xA1Pium! \xA1Pium! \xA1Pium!"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
-    text: "Quer\xEDa hablar contigo"
+    text: "Quer\xEDa hablar contigo."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: Debe ser una prueba para saber si soy responsable y apta para el matrimonio.
+    text: "Debe ser una prueba para saber si soy responsable y apta para una relaci\xF3n amorosa."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: Claro que lo hice. Siempre pienso en mi futuro.
+    text: Claro que hice la tarea. Siempre pienso en mi futuro.
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: El futuro es importante, hoy solo soy una chica normal.
+    text: "El futuro es importante, hoy solo soy una chica normal. Pero en el futuro ser\xE9 alguien\u2026"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "Pero en el futuro ser\xE9 alguien\u2026 m\xE1s alta y con dinero."
+    text: "M\xE1s alta y con dinero."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
