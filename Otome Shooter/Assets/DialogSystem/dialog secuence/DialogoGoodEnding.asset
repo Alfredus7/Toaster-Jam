@@ -70,7 +70,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
-    text: "Lo que haga falta? A\xF1os? Que tanto en el futuro?"
+    text: "\xBFLo que haga falta? \xBFA\xF1os? \xBFQu\xE9 tanto en el futuro?"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0

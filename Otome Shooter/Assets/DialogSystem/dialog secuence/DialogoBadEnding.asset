@@ -22,7 +22,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
-    text: Aliza?
+    text: "\xBFAliza?"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -62,7 +62,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: eb94c2650e153084fa1930b0ab4a1c8e, type: 2}
-    text: "Cuento tiempo disoci\xE9? He perdido mi oportunidad?"
+    text: "\xBFCu\xE1nto tiempo disoci\xE9? He perdido mi oportunidad."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 0}
-    text: "Al final Aliza volvi\xF3 a su habitaci\xF3n arrepentida de no haber dejado de disociar"
+    text: "Al final Aliza volvi\xF3 a su habitaci\xF3n arrepentida de no haber dejado de disociar."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 0}
-    text: Si tan solo pudiera volver a intentarlo de nuevo e intentar vencer a todos los enemigos a tiempo
+    text: Si tan solo pudiera volver a intentarlo de nuevo e intentar vencer a todos los enemigos a tiempo.
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 0}
-    text: Si no entendiste, dije que reinicies el juego.
+    text: Si no entendiste, dije que prubes reiniciando el juego.
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
