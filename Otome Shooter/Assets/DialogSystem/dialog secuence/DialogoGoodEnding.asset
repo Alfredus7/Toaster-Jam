@@ -13,8 +13,80 @@ MonoBehaviour:
   m_Name: DialogoGoodEnding
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
-  - character: {fileID: 0}
-    text: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
+    text: "Oye, Aliza. \xBFest\xE1s ah\xED?"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: d0f94e17ed5262749b9532d537afa0de, type: 2}
+    text: "S\xED, aqu\xED estoy."
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
+    text: "Ser\xE1 que nos vamos ahora?"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
+    text: Primero debo ir a recoger mis libros.
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Ve con calma, yo te esperar\xE9 aqu\xED."
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 04ca3f7f700b58c498bb3d075c0b0102, type: 2}
+    text: Puedes ir yendo mientras tanto.
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "No te preocupes, te esperar\xE9 lo que haga falta."
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Lo que haga falta? A\xF1os? Que tanto en el futuro?"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: ''''''''''
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: b1cec78587e80814b8c729ef319afb43, type: 2}
+    text: "Deber\xEDa ir a por mis libros."
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0

@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87da3c32bf5c9ba46b04abc88abbf11e, type: 3}
+  m_Name: DialogoBadEnding
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
+  lines:
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
+    text: "Oye, Aliza. \xBFest\xE1s ah\xED?"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
+    text: Aliza?
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
+    text: ...
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Creo que ir\xE9 mejor con Freddy. \xC9l es bueno con esta materia."
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: 4e3c68b93c1a10e459f22455807f6028, type: 2}
+    text: "Ah\u2026 S\xED\u2026 \xC9l es mejor idea."
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: ...
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 11400000, guid: eb94c2650e153084fa1930b0ab4a1c8e, type: 2}
+    text: "Cuento tiempo disoci\xE9? He perdido mi oportunidad?"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: "Al final Aliza volvi\xF3 a su habitaci\xF3n arrepentida de no haber dejado de disociar"
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: Si tan solo pudiera volver a intentarlo de nuevo e intentar vencer a todos los enemigos a tiempo
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: Si no entendiste, dije que reinicies el juego.
+    backgroundAction: 0
+    characterVisibility: 0
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
