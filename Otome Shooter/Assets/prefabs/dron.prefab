@@ -1164,7 +1164,7 @@ MonoBehaviour:
   popupPrefab: {fileID: 5547628598829774869, guid: 0d03b7524611ea043abbdb80bcdce90f, type: 3}
   popupAnchor: {fileID: 3666995441689930016}
   popupHeightOffset: 0.5
-  critChance: 0.15
+  critChance: 0.4
   critMultiplier: 2
   deathEffectPrefab: {fileID: 5162910912013668194, guid: cf82839c411151342a7b2337bda9fb34, type: 3}
   deathFxLifetime: 2
