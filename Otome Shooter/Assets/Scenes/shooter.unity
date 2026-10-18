@@ -1408,7 +1408,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: el tiempo que se te presto para completar la mision expiro
+  m_Text: "El tiempo que se te prest\xF3 para completar la misi\xF3n expir\xF3."
 --- !u!222 &414160815
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1771,7 +1771,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Mision Cumplida Soldado
+  m_Text: Mision Cumplida, Soldado
 --- !u!222 &533123469
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2011,7 +2011,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: espera un tiempo para poder levantarte denuevo
+  m_Text: Espera un tiempo para poder levantarte de nuevo.
 --- !u!222 &679694434
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5131,7 +5131,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: lograste cumplir mision sin acabara tiempo
+  m_Text: "Lograste cumplir la misi\xF3n sin que acabara el tiempo."
 --- !u!222 &1838915565
 CanvasRenderer:
   m_ObjectHideFlags: 0
