@@ -3,15 +3,25 @@ using UnityEngine.AI;
 
 public abstract class EnemyBase : MonoBehaviour
 {
-    protected enum State { Falling, Waking, Chasing, Attacking }
+    // Spawning = espera inicial antes de empezar a caer
+    // Falling  = cae por gravedad
+    // Waking   = ya aterrizó, esperando tiempo fijo de reacción (1 s)
+    // Chasing  = IA activa
+    // Attacking= subclase decide
+    protected enum State { Spawning, Falling, Waking, Chasing, Attacking }
 
     [Header("Objetivo")]
     [SerializeField] protected Transform player;
 
     [Header("Spawn / Caída")]
+    [Tooltip("Tiempo desde el spawn hasta empezar a caer. Sobrescribible con SetSpawnDelay().")]
+    [SerializeField] protected float spawnDelay = 0f;
+
     [SerializeField] protected LayerMask groundMask = ~0;
     [SerializeField] protected float groundRayDistance = 1.2f;
-    [SerializeField] protected float wakeUpDelay = 2f;
+
+    [Tooltip("Tiempo de reacción tras aterrizar. Por diseño = 1 s (fijo).")]
+    [SerializeField] protected float wakeUpDelay = 1f;
 
     [Header("Persecución")]
     [SerializeField] protected float stopDistance = 1.5f;
@@ -21,6 +31,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected NavMeshAgent agent;
     protected Rigidbody rb;
     protected State state;
+    protected float spawnTimer;
     protected float wakeUpTimer;
     protected float repathTimer;
 
@@ -35,21 +46,55 @@ public abstract class EnemyBase : MonoBehaviour
             if (p != null) player = p.transform;
         }
 
+        // --- Estado inicial: quieto, sin gravedad, IA desactivada ---
         agent.enabled = false;
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        state = State.Falling;
+
+        if (rb != null)
+        {
+            rb.isKinematic = true;   // congelado durante la espera
+            rb.useGravity = false;
+        }
+
+        state = State.Spawning;
+        spawnTimer = spawnDelay;
+    }
+
+    /// <summary>
+    /// Permite sobrescribir el delay de spawn justo después de Instantiate,
+    /// antes del primer Update. Ej:  enemy.SetSpawnDelay(Random.Range(0.5f, 2f));
+    /// </summary>
+    public void SetSpawnDelay(float delay)
+    {
+        spawnDelay = Mathf.Max(0f, delay);
+        if (state == State.Spawning)
+            spawnTimer = spawnDelay;
     }
 
     protected virtual void Update()
     {
         switch (state)
         {
+            case State.Spawning: UpdateSpawning(); break;
             case State.Falling: CheckLanding(); break;
             case State.Waking: UpdateWaking(); break;
             case State.Chasing: UpdateChasing(); break;
             case State.Attacking: UpdateAttacking(); break;
         }
+    }
+
+    // ---------- FASE: SPAWNING (espera inicial) ----------
+    void UpdateSpawning()
+    {
+        spawnTimer -= Time.deltaTime;
+        if (spawnTimer > 0f) return;
+
+        // Se terminó la espera → soltar para que caiga
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+        state = State.Falling;
     }
 
     // ---------- FASE: CAYENDO ----------
@@ -66,14 +111,20 @@ public abstract class EnemyBase : MonoBehaviour
         if (NavMesh.SamplePosition(groundPoint, out NavMeshHit navHit, 2f, NavMesh.AllAreas))
             transform.position = navHit.position;
 
-        rb.isKinematic = true;
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+
         agent.enabled = true;
         agent.Warp(transform.position);
         agent.stoppingDistance = stopDistance;
         agent.updateRotation = true;
+        if (agent.isStopped) agent.isStopped = true; // quieto durante el wake up
 
         state = State.Waking;
-        wakeUpTimer = wakeUpDelay;
+        wakeUpTimer = wakeUpDelay; // ← 1 segundo fijo de reacción
     }
 
     // ---------- FASE: DESPERTANDO ----------
@@ -96,7 +147,6 @@ public abstract class EnemyBase : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, player.position);
 
-        // La subclase decide si es momento de atacar
         if (CanAttack(dist))
         {
             state = State.Attacking;
@@ -112,7 +162,7 @@ public abstract class EnemyBase : MonoBehaviour
         HandleChaseMovement(dist);
     }
 
-    // ---------- HOOKS para las subclases ----------
+    // ---------- HOOKS para subclases ----------
     protected virtual bool CanAttack(float distanceToPlayer) => false;
     protected virtual void OnAttackStart() { }
     protected virtual void UpdateAttacking() { }

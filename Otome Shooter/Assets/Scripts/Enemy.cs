@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
-public class Enemy : MonoBehaviour, IDamageable
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [Header("Vida")]
     [SerializeField] float maxHealth = 100f;
@@ -23,9 +23,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
-
-    // --- IDamageable ---
     public bool IsAlive => currentHealth > 0f;
+
+    public event System.Action<EnemyHealth> Died;   // 🆕
 
     float currentHealth;
 
@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     void Die()
     {
+        Died?.Invoke(this);       // 🆕 antes de destruir/desactivar
         onDeath?.Invoke();
 
         if (deathEffectPrefab != null)

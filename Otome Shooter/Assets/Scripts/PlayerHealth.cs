@@ -11,23 +11,20 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public float HealthPercent => maxHealth > 0f ? current / maxHealth : 0f;
 
     public event System.Action<float, float> HealthChanged; // (current, max)
+    public event System.Action Died;                        
 
     void Awake() => current = maxHealth;
 
-    void Start()
-    {
-        // Avisar a la UI (y a cualquiera suscripto) del valor inicial real.
-        // Start corre cuando TODOS los Awake/OnEnable de la escena ya terminaron.
-        HealthChanged?.Invoke(current, maxHealth);
-    }
+    void Start() => HealthChanged?.Invoke(current, maxHealth);
 
     public void TakeDamage(float amount, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (!IsAlive) return;
         current = Mathf.Max(0f, current - amount);
         HealthChanged?.Invoke(current, maxHealth);
-        Debug.Log($"Player HP: {current}");
-        if (current <= 0f) { /* muerte */ }
+
+        if (current <= 0f)
+            Died?.Invoke();          
     }
 
     public void Heal(float amount)
