@@ -4,20 +4,17 @@ using UnityEngine.InputSystem;
 public class WeaponController : MonoBehaviour
 {
     [Header("Configuración de Disparo")]
-    [SerializeField, Tooltip("Prefab de la bala o proyectil que se va a disparar.")]
+    [SerializeField, Tooltip("Prefab de la bala (debe tener Bullet, Rigidbody y Collider).")]
     GameObject bulletPrefab;
 
     [SerializeField, Tooltip("Punta del arma (Transform hijo que marca el inicio del disparo).")]
     Transform muzzlePoint;
 
-    [SerializeField, Tooltip("Velocidad del proyectil.")]
-    float bulletSpeed = 30f;
+    [SerializeField, Tooltip("Efecto visual o de partículas al disparar (Fogonazo/Muzzle Flash).")]
+    GameObject muzzleEffectPrefab;
 
     [SerializeField, Tooltip("Tiempo de espera entre disparos (Cadencia).")]
     float fireRate = 0.2f;
-
-    [SerializeField, Tooltip("Tiempo en segundos antes de que la bala se destruya automáticamente.")]
-    float bulletLifetime = 3f;
 
     [Header("Configuración de Retroceso (Recoil)")]
     [SerializeField, Tooltip("Intensidad general del retroceso (desplazamiento e inclinación).")]
@@ -25,10 +22,6 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField, Tooltip("Ajuste de velocidad de recuperación ligado a la cadencia. Mayor valor = el arma vuelve más rápido a su posición.")]
     float recoilRecoveryMultiplier = 5f;
-
-    [Header("Físicas e Inercia")]
-    [SerializeField, Tooltip("Si está activo, la bala sumará la velocidad de movimiento del jugador.")]
-    bool inheritPlayerVelocity = true;
 
     [Header("Gizmos y Visualización")]
     [SerializeField] bool showGizmos = true;
@@ -42,13 +35,11 @@ public class WeaponController : MonoBehaviour
     Quaternion currentRecoilRotation = Quaternion.identity;
 
     // Referencias
-    Rigidbody playerRb;
     Collider[] playerColliders;
     float nextFireTime = 0f;
 
     void Awake()
     {
-        playerRb = GetComponentInParent<Rigidbody>();
         playerColliders = GetComponentsInParent<Collider>();
 
         // Guardamos la posición y rotación local inicial del arma
@@ -58,8 +49,7 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
-        // Calculamos dinámicamente la velocidad de recuperación en función de la cadencia (fireRate).
-        // Si reduces el fireRate (dispara más rápido), la velocidad de recuperación aumenta automáticamente.
+        // Cálculo dinámico de la velocidad de recuperación basado en la cadencia
         float dynamicReturnSpeed = (1f / Mathf.Max(fireRate, 0.001f)) * recoilRecoveryMultiplier;
 
         // Interpolar suavemente el retroceso de vuelta a cero
@@ -84,7 +74,7 @@ public class WeaponController : MonoBehaviour
         if (Time.time < nextFireTime) return;
         nextFireTime = Time.time + fireRate;
 
-        // Direcciones base del retroceso escaladas por la fuerza general
+        // Aplicar el impulso brusco del retroceso
         Vector3 basePositionKick = new Vector3(0f, 0f, -0.05f);
         Vector3 baseRotationKick = new Vector3(-10f, 0f, 0f);
 
@@ -93,32 +83,31 @@ public class WeaponController : MonoBehaviour
 
         if (bulletPrefab != null && muzzlePoint != null)
         {
-            // Instanciar bala
-            GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
-            Destroy(bullet, bulletLifetime);
-
-            // Físicas de la bala
-            Rigidbody rbBullet = bullet.GetComponent<Rigidbody>();
-            if (rbBullet != null)
+            // 1. Instanciar el efecto de fogonazo COMO HIJO del muzzlePoint
+            if (muzzleEffectPrefab != null)
             {
-                Vector3 shootVelocity = muzzlePoint.forward * bulletSpeed;
-
-                if (inheritPlayerVelocity && playerRb != null)
-                {
-                    shootVelocity += playerRb.linearVelocity;
-                }
-
-                rbBullet.linearVelocity = shootVelocity;
+                // El cuarto parámetro (muzzlePoint) asigna este objeto directamente como su hijo
+                GameObject muzzleEffect = Instantiate(muzzleEffectPrefab, muzzlePoint.position, muzzlePoint.rotation, muzzlePoint);
             }
+            //aqui quiero que la bala use el forward del arma como direcion
+            // 2. Instanciar la bala
+            GameObject bulletObj = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
 
-            // Ignorar colisión con el jugador
-            Collider bulletCollider = bullet.GetComponent<Collider>();
+            // 3. Ignorar colisión inicial entre la bala y los colliders del jugador
+            Collider bulletCollider = bulletObj.GetComponent<Collider>();
             if (bulletCollider != null && playerColliders != null)
             {
                 foreach (Collider playerCol in playerColliders)
                 {
                     Physics.IgnoreCollision(bulletCollider, playerCol, true);
                 }
+            }
+
+            // 4. Inicializar el movimiento independiente de la bala
+            Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.Initialize(muzzlePoint.forward);
             }
         }
         else
