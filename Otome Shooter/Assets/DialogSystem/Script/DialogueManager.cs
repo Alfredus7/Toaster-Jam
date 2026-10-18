@@ -14,12 +14,16 @@ public enum BackgroundAction
     FadeToBlack,
     FadeToNormal
 }
+
 public enum CharacterVisibility
 {
     Keep,
     Hide,
-    Show
+    Show,
+    OnlyLeft,
+    OnlyRight
 }
+
 // Una opción (A o B) que el jugador puede elegir.
 [System.Serializable]
 public class ChoiceOption
@@ -178,35 +182,51 @@ public class DialogueManager : MonoBehaviour
         );
     }
 
+
     void CambiarVisibilidadPersonajes(CharacterVisibility action)
     {
         switch (action)
         {
-            case CharacterVisibility.Hide:
+            case CharacterVisibility.Keep:
+                // No cambiar la visibilidad actual
+                break;
 
+            case CharacterVisibility.Hide:
                 if (leftImage != null)
                     leftImage.gameObject.SetActive(false);
 
                 if (rightImage != null)
                     rightImage.gameObject.SetActive(false);
-
                 break;
 
             case CharacterVisibility.Show:
-
                 if (leftImage != null)
                     leftImage.gameObject.SetActive(true);
 
                 if (rightImage != null)
                     rightImage.gameObject.SetActive(true);
-
                 break;
 
-            case CharacterVisibility.Keep:
-                // Mantener el estado actual
+            case CharacterVisibility.OnlyLeft:
+                // Mostrar solo a Aliza
+                if (leftImage != null)
+                    leftImage.gameObject.SetActive(true);
+
+                if (rightImage != null)
+                    rightImage.gameObject.SetActive(false);
+                break;
+
+            case CharacterVisibility.OnlyRight:
+                // Mostrar solo a Arthur
+                if (leftImage != null)
+                    leftImage.gameObject.SetActive(false);
+
+                if (rightImage != null)
+                    rightImage.gameObject.SetActive(true);
                 break;
         }
     }
+
 
 
     IEnumerator FadeFondo(float alphaDestino)
@@ -282,10 +302,37 @@ public class DialogueManager : MonoBehaviour
         // Los pensamientos (alias de la izquierda) se muestran en cursiva
         dialogueText.fontStyle = isThought ? FontStyles.Italic : FontStyles.Normal;
 
+
         SetSpeakerHighlight(side);
+
         CambiarFondo(line.backgroundAction);
+
         CambiarVisibilidadPersonajes(line.characterVisibility);
-        TypeLine(line.text);
+
+        // Por defecto utilizamos el diálogo normal.
+        string textoMostrar = line.text;
+
+        // Si esta línea depende de los puntos,
+        // seleccionamos el texto correspondiente.
+        if (line.useScoreDialogue)
+        {
+            if (HiddenScore >= line.minimumScore)
+            {
+                textoMostrar = line.highScoreText;
+            }
+            else
+            {
+                textoMostrar = line.lowScoreText;
+            }
+
+            Debug.Log(
+                "Puntos actuales: " + HiddenScore +
+                " | Mínimo requerido: " + line.minimumScore
+            );
+        }
+
+        TypeLine(textoMostrar);
+
     }
 
     // Pone el retrato en el lado que corresponde; el otro personaje se queda como estaba.

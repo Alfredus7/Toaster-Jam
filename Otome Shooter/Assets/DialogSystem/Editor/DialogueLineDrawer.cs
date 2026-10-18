@@ -11,6 +11,7 @@ public class DialogueLineDrawer : PropertyDrawer
 
 
 
+
     public override float GetPropertyHeight(
         SerializedProperty property,
         GUIContent label)
@@ -18,18 +19,34 @@ public class DialogueLineDrawer : PropertyDrawer
         SerializedProperty textProp =
             property.FindPropertyRelative("text");
 
+        SerializedProperty useScoreProp =
+            property.FindPropertyRelative("useScoreDialogue");
+
         float h = EditorGUIUtility.singleLineHeight;
         float textHeight = GetTextHeight(textProp);
 
-        // Retrato + texto + dos títulos + dos desplegables
-        return Padding
+        // Altura que ya utilizamos para retrato,
+        // texto, fondo y personajes.
+        float total = Padding
             + PortraitSize
             + Padding * 2
             + textHeight
             + Padding * 2
             + (h + Padding) * 4
             + Padding * 2;
+
+        // Casilla para activar diálogo según puntos.
+        total += h + Padding * 3;
+
+        if (useScoreProp != null && useScoreProp.boolValue)
+        {
+            // Puntaje mínimo y dos campos de texto.
+            total += h * 3 + 56f * 2 + Padding * 5;
+        }
+
+        return total;
     }
+
 
 
 
@@ -188,6 +205,78 @@ public class DialogueLineDrawer : PropertyDrawer
                 visibilityProp.enumDisplayNames
             );
         }
+
+
+        // -------- DIÁLOGO SEGÚN PUNTOS --------
+
+        SerializedProperty useScoreProp =
+            property.FindPropertyRelative("useScoreDialogue");
+
+        SerializedProperty minScoreProp =
+            property.FindPropertyRelative("minimumScore");
+
+        SerializedProperty lowTextProp =
+            property.FindPropertyRelative("lowScoreText");
+
+        SerializedProperty highTextProp =
+            property.FindPropertyRelative("highScoreText");
+
+        // Espacio después del desplegable de personajes
+        y += optionHeight + Padding * 2;
+
+        // Casilla para activar el diálogo especial
+        EditorGUI.PropertyField(
+            new Rect(content.x, y, content.width, optionHeight),
+            useScoreProp,
+            new GUIContent("Diálogo según puntos")
+        );
+
+        y += optionHeight + Padding;
+
+        // Mostrar los demás campos solamente
+        // si se activa la casilla.
+        if (useScoreProp.boolValue)
+        {
+            // Cantidad mínima de puntos
+            EditorGUI.PropertyField(
+                new Rect(content.x, y, content.width, optionHeight),
+                minScoreProp,
+                new GUIContent("Puntos mínimos")
+            );
+
+            y += optionHeight + Padding;
+
+            // Texto para puntos bajos
+            EditorGUI.LabelField(
+                new Rect(content.x, y, content.width, optionHeight),
+                "Texto con puntos bajos"
+            );
+
+            y += optionHeight + Padding;
+
+            EditorGUI.PropertyField(
+                new Rect(content.x, y, content.width, 56f),
+                lowTextProp,
+                GUIContent.none
+            );
+
+            y += 56f + Padding * 2;
+
+            // Texto para puntos altos
+            EditorGUI.LabelField(
+                new Rect(content.x, y, content.width, optionHeight),
+                "Texto con puntos altos"
+            );
+
+            y += optionHeight + Padding;
+
+            EditorGUI.PropertyField(
+                new Rect(content.x, y, content.width, 56f),
+                highTextProp,
+                GUIContent.none
+            );
+        }
+
 
         EditorGUI.EndProperty();
     }
