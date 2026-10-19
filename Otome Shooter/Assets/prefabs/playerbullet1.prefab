@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8154245045713576097}
   - component: {fileID: 6063085632636741416}
   - component: {fileID: 6635549798757055593}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: playerbullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,9 +105,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3889991131682401261}
     m_Modifications:
+    - target: {fileID: 1017566096282904768, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3473529909581181512, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_Name
       value: vfx_Projectile_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473529909581181512, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4559080999636468818, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -148,6 +156,14 @@ PrefabInstance:
     - target: {fileID: 4559080999636468818, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5287990389288925174, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139904261238893799, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
