@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 01d41f445d553184484028237339b64b
+guid: d736426292e32ee4492f9da0f61ea424
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4550216565933429864
-    second: AlizaTeAgradece_0
+      213: 2656790122640574497
+    second: AlizaTeAgradece 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,12 +102,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AlizaTeAgradece_0
+      name: AlizaTeAgradece 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1024
+        width: 1280
         height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8645f8fcbdd952f30800000000000000
-      internalID: 4550216565933429864
+      spriteID: 12802ce4a80ded420800000000000000
+      internalID: 2656790122640574497
       vertices: []
       indices: 
       edges: []
