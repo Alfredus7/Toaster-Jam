@@ -85,6 +85,7 @@ public class WeaponController : MonoBehaviour
     // ───────────────────────────────────────────────
     void TryShoot()
     {
+        if (Time.timeScale <= 0f) return;
         if (Time.time < nextFireTime) return;
         nextFireTime = Time.time + fireRate;
 

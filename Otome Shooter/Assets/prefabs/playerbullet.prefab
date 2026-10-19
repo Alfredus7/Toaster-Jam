@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8493846515423298121}
   - component: {fileID: 7547532237419364598}
   - component: {fileID: 2906913301140929237}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: playerbullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3621576464853060373}
     m_Modifications:
+    - target: {fileID: 867456590499508831, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1488604450672332376, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1488604450672332376, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -152,6 +160,14 @@ PrefabInstance:
     - target: {fileID: 7626139322179216226, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
       propertyPath: m_Name
       value: vfx_Projectile_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626139322179216226, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847808085714912025, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8847808085714912025, guid: dc33e45a4bb28854c941caca0629dcce, type: 3}
       propertyPath: m_IsActive
