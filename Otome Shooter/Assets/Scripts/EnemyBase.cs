@@ -3,18 +3,19 @@ using UnityEngine.AI;
 
 public abstract class EnemyBase : MonoBehaviour
 {
+    // Dormant  = sobre la nave, sin IA ni gravedad, esperando Deploy()
     // Spawning = espera inicial antes de empezar a caer
     // Falling  = cae por gravedad
     // Waking   = ya aterrizó, esperando tiempo fijo de reacción (1 s)
     // Chasing  = IA activa
     // Attacking= subclase decide
-    protected enum State { Spawning, Falling, Waking, Chasing, Attacking }
+    protected enum State { Dormant, Spawning, Falling, Waking, Chasing, Attacking } // *** NUEVO: Dormant ***
 
     [Header("Objetivo")]
     [SerializeField] protected Transform player;
 
     [Header("Spawn / Caída")]
-    [Tooltip("Tiempo desde el spawn hasta empezar a caer. Sobrescribible con SetSpawnDelay().")]
+    [Tooltip("Tiempo desde el spawn (o Deploy) hasta empezar a caer. Sobrescribible con SetSpawnDelay().")]
     [SerializeField] protected float spawnDelay = 0f;
 
     [SerializeField] protected LayerMask groundMask = ~0;
@@ -28,12 +29,19 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float repathInterval = 0.2f;
     [SerializeField] protected float maxChaseRange = 50f;
 
+    [Header("Modo Nave (Dormant)")] // *** NUEVO ***
+    [Tooltip("Si true, el enemigo arranca dormido (sobre la nave) y no hace nada hasta que la EnemyShip llame a Deploy().")]
+    [SerializeField] protected bool startDormant = false;
+
     protected NavMeshAgent agent;
     protected Rigidbody rb;
     protected State state;
     protected float spawnTimer;
     protected float wakeUpTimer;
     protected float repathTimer;
+
+    /// <summary>True mientras espera ser desplegado por una EnemyShip.</summary>
+    public bool IsDormant => state == State.Dormant; // *** NUEVO ***
 
     protected virtual void Awake()
     {
@@ -53,10 +61,19 @@ public abstract class EnemyBase : MonoBehaviour
         {
             rb.isKinematic = true;   // congelado durante la espera
             rb.useGravity = false;
+            if (startDormant) rb.detectCollisions = false; // *** NUEVO: evita empujones mientras viaja con la nave ***
         }
 
-        state = State.Spawning;
-        spawnTimer = spawnDelay;
+        // *** CAMBIO: estado inicial según startDormant ***
+        if (startDormant)
+        {
+            state = State.Dormant;
+        }
+        else
+        {
+            state = State.Spawning;
+            spawnTimer = spawnDelay;
+        }
     }
 
     /// <summary>
@@ -70,10 +87,30 @@ public abstract class EnemyBase : MonoBehaviour
             spawnTimer = spawnDelay;
     }
 
+    /// <summary>
+    /// La EnemyShip llama esto para "soltar" al enemigo.
+    /// Se desparenta y arranca el ciclo normal: Spawning → Falling → Waking → Chasing.
+    /// Si el enemigo no estaba dormido, no hace nada.
+    /// </summary>
+    public void Deploy() // *** NUEVO ***
+    {
+        if (state != State.Dormant) return;
+
+        if (rb != null)
+            rb.detectCollisions = true;
+
+        if (transform.parent != null)
+            transform.SetParent(null, true);
+
+        state = State.Spawning;
+        spawnTimer = spawnDelay;
+    }
+
     protected virtual void Update()
     {
         switch (state)
         {
+            case State.Dormant:  /* no hace nada */ break; // *** NUEVO ***
             case State.Spawning: UpdateSpawning(); break;
             case State.Falling: CheckLanding(); break;
             case State.Waking: UpdateWaking(); break;

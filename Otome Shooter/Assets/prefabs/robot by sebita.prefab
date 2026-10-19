@@ -1113,18 +1113,19 @@ MonoBehaviour:
     m_Bits: 4294967295
   groundRayDistance: 1.2
   wakeUpDelay: 1
-  stopDistance: 1.5
+  stopDistance: 2
   repathInterval: 0.2
-  maxChaseRange: 50
+  maxChaseRange: 100
+  startDormant: 0
   minShootRange: 5
-  maxShootRange: 20
-  fireCooldown: 5
+  maxShootRange: 40
+  fireCooldown: 3
   aimTime: 0.4
   inaccuracyDegrees: 6
   projectilePrefab: {fileID: 9132763572662749892, guid: cea15f82aacc69a4f8042bb2e8e814b5, type: 3}
   muzzle: {fileID: 3625208989239769636}
-  projectileSpeed: 100
-  projectileDamage: 5
+  projectileSpeed: 50
+  projectileDamage: 8
   lineOfSightMask:
     serializedVersion: 2
     m_Bits: 1
