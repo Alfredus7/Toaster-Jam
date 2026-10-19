@@ -2592,7 +2592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogoFinal
   panelFinal: {fileID: 786462516}
-  escenaShooter: shooter
+  escenaShooter: VisualNovel
   escenaMenu: Menu
 --- !u!4 &2115422285
 Transform:
