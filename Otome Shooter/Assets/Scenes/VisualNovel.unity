@@ -511,6 +511,11 @@ MonoBehaviour:
       responseSide: 1
       responsePortrait: {fileID: 0}
       points: 1
+  musicSource: {fileID: 1059611604}
+  musicEvents:
+  - atLine: 38
+    action: 0
+    newMusic: {fileID: 8300000, guid: f11f0e2e657c57a4080b3c66f0de93ba, type: 3}
   currentDialogue: {fileID: 11400000, guid: 5fbee57278c8f1049bc1b5647d813179, type: 2}
   typingSpeed: 0.03
   autoDelay: 1

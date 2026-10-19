@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSequence
   lines:
   - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
-    text: "Oye, Aliza. \xBFest\xE1s ah\xED?"
+    text: "Oye, Aliza \xBFest\xE1s ah\xED?"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 11400000, guid: e0fcb4ae1908b6543b00e0e913dcbfaf, type: 2}
-    text: "Ser\xE1 que nos vamos ahora?"
+    text: "\xBFSer\xE1 que nos vamos ahora?"
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
@@ -94,8 +94,40 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 0}
-    text: y asi el good ending fue hecho
+    text: Aliza y Arthur fueron a comer a un lugar cercano para hacer tareas juntos.
     backgroundAction: 1
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: "No pas\xF3 nada fuera de lo esperado. Pero ella la pas\xF3 bien."
+    backgroundAction: 0
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: Aliza estaba agradecida por este momento.
+    backgroundAction: 0
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: "\xBFEst\xE1s ah\xED? Si no entendiste, ella te da las gracias."
+    backgroundAction: 0
+    characterVisibility: 1
+    useScoreDialogue: 0
+    minimumScore: 0
+    lowScoreText: 
+    highScoreText: 
+  - character: {fileID: 0}
+    text: "Hablando de gracias, deber\xEDas agradecerles a ellos."
+    backgroundAction: 0
     characterVisibility: 1
     useScoreDialogue: 0
     minimumScore: 0

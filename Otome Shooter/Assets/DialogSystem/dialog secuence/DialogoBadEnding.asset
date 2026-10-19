@@ -71,8 +71,8 @@ MonoBehaviour:
     highScoreText: 
   - character: {fileID: 0}
     text: "Al final Aliza volvi\xF3 a su habitaci\xF3n arrepentida de no haber dejado de disociar."
-    backgroundAction: 0
-    characterVisibility: 0
+    backgroundAction: 1
+    characterVisibility: 1
     useScoreDialogue: 0
     minimumScore: 0
     lowScoreText: 
@@ -86,7 +86,7 @@ MonoBehaviour:
     lowScoreText: 
     highScoreText: 
   - character: {fileID: 0}
-    text: Si no entendiste, dije que prubes reiniciando el juego.
+    text: Si no entendiste, dije que pruebes reiniciando el juego.
     backgroundAction: 0
     characterVisibility: 0
     useScoreDialogue: 0
