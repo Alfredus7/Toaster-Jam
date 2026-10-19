@@ -46,10 +46,6 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField, Range(0f, 1f), Tooltip("Porcentaje de velocidad que se conserva al terminar el dash.")]
     float dashExitSpeedMultiplier = 0.7f;
     [SerializeField] Transform cameraTransform;
-
-    [Header("UI Estado y Dash")]
-    [SerializeField] Text stateText;
-    [SerializeField] Text dashText;
     public CharacterState CurrentState { get; private set; } = CharacterState.Idle;
 
     // Overrides de velocidad (buffs/debuffs)
@@ -105,7 +101,6 @@ public class FirstPersonController : MonoBehaviour
         UpdateTimers();
         TryJump();
         UpdateCharacterState();
-        UpdateUI();
     }
 
     bool IsGrounded() => groundCheck == null || groundCheck.isGrounded;
@@ -170,31 +165,6 @@ public class FirstPersonController : MonoBehaviour
         CurrentState = moveInput.sqrMagnitude > 0.01f
             ? CharacterState.Walk
             : CharacterState.Idle;
-    }
-
-    void UpdateUI()
-    {
-        if (stateText != null && CurrentState != _lastState)
-        {
-            stateText.text = CurrentState switch
-            {
-                CharacterState.Idle => "state: idle",
-                CharacterState.Walk => "state: walk",
-                CharacterState.Jump => "state: jump",
-                CharacterState.Fall => "state: fall",
-                CharacterState.Dash => "state: dash",
-                _ => string.Empty
-            };
-            _lastState = CurrentState;
-        }
-
-        if (dashText != null &&
-            (currentDashCharges != _lastDashCharges || maxDashCharges != _lastMaxDashCharges))
-        {
-            dashText.text = $"Dash: {currentDashCharges}/{maxDashCharges}";
-            _lastDashCharges = currentDashCharges;
-            _lastMaxDashCharges = maxDashCharges;
-        }
     }
 
     // --- ENTRADA (New Input System) ---
