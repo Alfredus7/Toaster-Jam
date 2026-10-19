@@ -9,4 +9,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(nombreEscena);
     }
+
+    public void Salir()
+    {
+        Application.Quit();
+    }
 }
