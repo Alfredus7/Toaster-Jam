@@ -38,7 +38,7 @@ public class FirstPersonController : MonoBehaviour
     public event System.Action Jumped;
     [SerializeField] GroundCheck groundCheck;
 
-    [Header("Dash (Estilo ULTRAKILL)")]
+    [Header("Dash")]
     public float dashSpeed = 25f;
     public float dashDuration = 0.2f;
     public int maxDashCharges = 3;

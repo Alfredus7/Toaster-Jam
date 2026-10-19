@@ -208,6 +208,7 @@ public class PlayerUIManager : MonoBehaviour
         if (gameEnded) return;
         gameEnded = true;
         timerRunning = false;
+        if (downedPanel != null) downedPanel.SetActive(false);
         if (defeatPanel != null) defeatPanel.SetActive(true);
         ApplyGameOverState();
         Debug.Log("[PlayerUIManager] DERROTA (tiempo agotado)");

@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: setSailDelay
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: postDeploySpeed
@@ -1416,7 +1416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: setSailDelay
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: postDeploySpeed
