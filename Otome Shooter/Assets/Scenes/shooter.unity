@@ -2280,7 +2280,7 @@ PrefabInstance:
       objectReference: {fileID: 689510590}
     - target: {fileID: 7892186737205894889, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: damage
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7892186737205894889, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: aimRange
@@ -2337,6 +2337,10 @@ PrefabInstance:
     - target: {fileID: 8278068850390820247, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8462855666299085181, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
+      propertyPath: damage
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8462855666299085181, guid: 3d6f16862e50155479e10a23a0d9ca1b, type: 3}
       propertyPath: aimRange
@@ -2735,11 +2739,11 @@ PrefabInstance:
       objectReference: {fileID: 795176314}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: moveSpeed
-      value: 50
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: setSailDelay
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5389056215170886482, guid: 3d24aa57bb56a86449d7952225a3bcdc, type: 3}
       propertyPath: postDeploySpeed
